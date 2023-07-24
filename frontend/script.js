@@ -1,8 +1,9 @@
-let menubar = document.querySelector('#menu-bar')
-let mynav = document.querySelector('.navbar')
+let menubar = document.querySelector("#menu-bar");
+let mynav = document.querySelector(".navbar");
 
 menubar.onclick = ()=>{
-    menubar.classList.toggle('fa fa-times')
-    mynav.classList.toggle('active')
+    menubar.classList.toggle("fa fa-times");
+    mynav.classList.toggle("active");
+    
 
 }
