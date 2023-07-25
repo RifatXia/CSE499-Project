@@ -180,30 +180,40 @@ nav a{
     flex: 1 1 300px;
     padding: 2rem;
     box-shadow: var(--box-shadow);
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
 
  }
  .main-inner-services .services-img img{
     width: 100%;
-    border-radius: 10px;
-    
-
-    
+    border-radius: 10px;   
  }
  
  .services-content{
     text-align: center;
     background-color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 4rem 0;
  }
  .services-content h2{
     font-size: 22px;
-    padding: 2rem 0;
+    padding: 1rem 0;
  }
  .services-content p{
     font-size: 1.5rem;
     padding: 1rem 0;
     line-height: 2.5rem;
+    margin-bottom: 2rem;
+ }
+ .services-content a{
+    padding: 1.5rem 3rem;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    color: white;
+    background: var(--button-color);
+    transition: 0.8s;
+ }
+ .services-content a:hover{
+    border-radius: 0;
  }
 
 
