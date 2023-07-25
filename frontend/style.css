@@ -6,7 +6,7 @@
     --color:#1ebeb6;
     --primar-color:#efbb20;
     --navbar-color:#2c353d;
-    --button-color:linear-gradient(90deg, rgba(30, 190, 182, 1) 0%,rgba(0, 130, 124, 1));
+    --button-color: linear-gradient(90deg, rgba(30, 190, 182, 1) 0%, rgba(0, 130, 124, 1));
     --box-shadow:0 0 10px #e7e7e7;
     --background:#f7f7f7;
 
@@ -62,7 +62,7 @@ nav a{
 
    
 
-@media (max-width:768px){
+@media (max-width: 768px){
     html{
         font-size: 55%;
     }
