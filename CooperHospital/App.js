@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, SafeAreaView, FlatList, ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 const url = "https://reactnative.dev/movies.json";
 
