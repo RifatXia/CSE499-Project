@@ -28,8 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-# Application definition
+# the site that we would be working on 
+SITE_ID = 2
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,10 +39,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # authentication
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     'rest_framework',
     'corsheaders',  
     'hospital',
+    'users',
 ]
+
+# all the authentication account stays here 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        "SCOPE": [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {'access_type': 'online'}
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,3 +166,13 @@ JWT_AUTH = {
     # allow refreshing of tokens
     'JWT_ALLOW_REFRESH': True,
 }
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
