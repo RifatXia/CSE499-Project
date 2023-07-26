@@ -39,6 +39,7 @@ html{
     overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    scroll-behavior: smooth;
 
 }
 
@@ -108,7 +109,7 @@ nav a{
  .main-inner-home p {
      font-size: 2rem;
      line-height: 3rem;
-     padding-top: 2rem;
+     padding-top: 0rem;
  }
 
  .home-back{
@@ -215,6 +216,58 @@ nav a{
  .services-content a:hover{
     border-radius: 0;
  }
+
+ .appointment{
+    padding: 2rem 7%;
+ }
+
+.heading-appointment{
+    text-align: center;
+}
+.heading-appointment h1{
+    font-size: 40px;
+    padding: 2rem;
+}
+.heading-appointment h1 span{
+    color: var(--color);
+}
+.main-appointment{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.main-inner-appointment{
+    flex: 1 1 45rem;
+}
+.main-inner-appointment img{
+    width: 100%;
+    padding: 4rem;
+}
+.right-appointment-content{
+    padding: 0 4rem;
+}
+.right-appointment-content h2{
+    font-size: 25px;
+    padding: 4rem 0;
+}
+.right-appointment-content p{
+    font-size: 1.5rem;
+    line-height: 3rem;
+    margin-bottom: 4rem;
+}
+.right-appointment-content a{
+    padding: 2rem 4rem;
+    background: var(--button-color);
+    color: white;
+    font-size: 1.5rem;
+    transition: 0.5s;
+}
+.right-appointment-content a:hover{
+    border-radius: 15px;
+}
+
+
 
 
    
