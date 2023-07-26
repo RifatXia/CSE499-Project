@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>User Data Form</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="id_age">Age:</label>
+                {{ form.age }}
+            </div>
+            <div class="form-group">
+                <label for="id_gender">Gender:</label>
+                {{ form.gender }}
+            </div>
+            <div class="form-group">
+                <label for="id_occupation">Occupation:</label>
+                {{ form.occupation }}
+            </div>
+            <!-- Add more form fields as needed -->
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
