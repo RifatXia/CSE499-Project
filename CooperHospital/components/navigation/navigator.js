@@ -14,9 +14,6 @@ function Navigator(props) {
     </Stack.Navigator>
 
   )
-
-
-
 }
 
 
