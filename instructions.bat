@@ -10,3 +10,5 @@ npm install @react-navigation/stack
 npm install react-native-gesture-handler
 npm install @react-native-masked-view/masked-view
 npm i react-native-screens
+
+python manage.py collectstatic
