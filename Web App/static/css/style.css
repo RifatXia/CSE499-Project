@@ -1,5 +1,5 @@
-/* Reset some default styles */
-/* body,
+Reset some default styles
+body,
 h1,
 h2,
 h3,
@@ -93,10 +93,10 @@ button:hover {
 
 button:active {
     background-color: #13847a;
-} */
+}
 
 /* Custom checkboxes and radio buttons */
-/* input[type="checkbox"],
+input[type="checkbox"],
 input[type="radio"] {
     margin-right: 8px;
     appearance: none;
@@ -117,15 +117,15 @@ input[type="checkbox"]:checked,
 input[type="radio"]:checked {
     background-color: #1ebeb6;
     border-color: #1ebeb6;
-} */
+}
 
 /* Custom radio buttons */
-/* input[type="radio"] {
+input[type="radio"] {
     border-radius: 50%;
-} */
+}
 
 /* Custom file input */
-/* input[type="file"] {
+input[type="file"] {
     display: none;
 }
 
@@ -147,9 +147,9 @@ input[type="radio"]:checked {
 
 .file-input-label:active {
     background-color: #13847a;
-} */
+}
 
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
     margin: 0;
@@ -214,4 +214,4 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
-}
+} */
