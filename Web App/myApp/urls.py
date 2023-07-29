@@ -21,7 +21,9 @@ from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
     path('hospital/', include('hospital.urls')),
     path('', include('users.urls')),
+
+    # url for the static access of the javascript files
+    path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
 ]
