@@ -3,6 +3,8 @@ cd C:\Users\RifatXia\Desktop\CSE499 Project\CSE499-Project\frontend
 conda activate myenv
 streamlit run app.py
 
+pip install django-cors-headers
+
 npm install @react-navigation/native
 npm install react-native-screens react-native-safe-area-context
 npm i @react-native-google-signin/google-signin
