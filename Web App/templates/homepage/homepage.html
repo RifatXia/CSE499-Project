@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +23,8 @@
         <a href="#">About</a>
         <a href="#">Contact &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp;</a>
-        <a href="http://127.0.0.1:8000/">Login</a>
-        <a href="http://127.0.0.1:8000/mytest/add_person/">Signup</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'add_person' %}">Signup</a>
     </nav>
 
     <div class="menu-icons">

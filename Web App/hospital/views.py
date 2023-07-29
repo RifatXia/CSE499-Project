@@ -15,3 +15,6 @@ def add_person(request):
 
 def success(request):
     return render(request, 'hospital/success.html')
+
+def login(request):
+    return render(request, 'hospital/login.html')
