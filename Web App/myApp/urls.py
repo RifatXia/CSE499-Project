@@ -23,5 +23,5 @@ urlpatterns = [
 
     path('api/hospital/', include('hospital.urls')),
 
-    path('mytest/', include('mytest.urls')),
+    # path('mytest/', include('mytest.urls')),
 ]

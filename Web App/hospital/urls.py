@@ -1,7 +1,7 @@
-from django.contrib import admin
 from django.urls import path
-from .views import TestView
+from . import views
 
 urlpatterns = [
-    path('test/', TestView.as_view()),
+    path('add_person/', views.add_person, name='add_person'),
+    path('success/', views.success, name='success'),
 ]

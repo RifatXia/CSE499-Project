@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'corsheaders',  
     'hospital',
     'users',
-    'mytest',
 ]
 
 # all the authentication account stays here 
