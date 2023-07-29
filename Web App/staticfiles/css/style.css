@@ -12,7 +12,7 @@ li {
 body {
     margin: 0;
     padding: 0;
-    background-image: url('./bg_image_1.jpg');
+    background-image: url('../images/bg_image_1.jpg');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
