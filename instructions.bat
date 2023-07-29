@@ -4,6 +4,8 @@ conda activate myenv
 streamlit run app.py
 
 pip install django-cors-headers
+pip install djangorestframework-simplejwt
+pip install djangorestframework
 
 npm install @react-navigation/native
 npm install react-native-screens react-native-safe-area-context
