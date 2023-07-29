@@ -9,3 +9,5 @@ class Person(models.Model):
     email = models.EmailField()
     phn = models.IntegerField()
 
+    def __str__(self):
+        return self.name

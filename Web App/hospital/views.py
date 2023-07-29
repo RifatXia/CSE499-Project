@@ -6,7 +6,7 @@ def add_person(request):
         form = PersonForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('success')
+            return redirect('add_person')
     else:
         form = PersonForm()
 
