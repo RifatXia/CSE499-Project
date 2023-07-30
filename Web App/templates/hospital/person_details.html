@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <title>Account Information</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/person_details.css' %}">
 </head>
@@ -46,48 +45,52 @@
                 <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <h3 class="mb-4">Account Information</h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input type="text" class="form-control" value="{{ person_data.name }}">
+                        <!-- Update the form's action attribute to 'get_person' -->
+                        <form method="POST" action="{% url 'get_person' person_data.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" class="form-control" name="name" value="{{ person_data.name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date Of Birth</label>
+                                        <input type="date" class="form-control" name="dob" value="{{ person_data.dob|date:'Y-m-d' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Age</label>
+                                        <input type="number" class="form-control" name="age" value="{{ person_data.age }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <input type="text" class="form-control" name="gen" value="{{ person_data.gen }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" name="email" value="{{ person_data.email }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" class="form-control" name="phn" value="{{ person_data.phn }}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Date Of Birth</label>
-                                    <input type="date" class="form-control" value="{{ person_data.dob }}">
-                                </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="button" class="btn btn-light">Cancel</button>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Age</label>
-                                    <input type="number" class="form-control" value="{{ person_data.age }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Gender</label>
-                                    <input type="text" class="form-control" value="{{ person_data.gen }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" value="{{ person_data.email }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" value="{{ person_data.phn }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-primary">Update</button>
-                            <button class="btn btn-light">Cancel</button>
-                        </div>
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                         <h3 class="mb-4">Password Settings</h3>
@@ -210,40 +213,10 @@
             </div>
         </div>
     </section>
-
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var personId = 1; // Replace 1 with the actual person_id you want to fetch
-
-            // AJAX request to fetch data from Django API
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/person/' + user.id + '/');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    var data = JSON.parse(xhr.responseText);
-
-                    // Update the form fields with the fetched data
-                    document.getElementById('full-name').value = data.name;
-                    document.getElementById('date-of-birth').value = data.dob;
-                    document.getElementById('age').value = data.age;
-                    document.getElementById('gender').value = data.gen;
-                    document.getElementById('email').value = data.email;
-                    document.getElementById('phone-number').value = data.phn;
-                }
-            };
-            xhr.send();
-        });
-    </script> -->
-
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-   
-    
-
-
 </body>
 
 </html>

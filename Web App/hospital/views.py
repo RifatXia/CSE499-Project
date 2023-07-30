@@ -1,3 +1,7 @@
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import render, redirect
 from .forms import PersonForm
 from rest_framework.response import Response
@@ -27,31 +31,38 @@ def login(request):
 from django.shortcuts import render
 from .models import Person
 
-# @api_view(['GET'])
-# def get_person(request, user_id):
-#     try:
-#         person = Person.objects.get(pk=user_id)
-#         serializer = PersonSerializer(person)
-#         return Response(serializer.data)
-#     except Person.DoesNotExist:
-#         return Response(status=404)
-
+# the method to fetch the user data and to edit it for both the android and the web
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def get_person(request, user_id):
-    try:
-        person = Person.objects.get(id=user_id)
-    except Person.DoesNotExist:
-        person = None
+    person = get_object_or_404(Person, id=user_id)
 
-    if person:
-        serializer = PersonSerializer(person)
+    # Check if the client wants JSON response (Android) or HTML response (Web)
+    if 'application/json' in request.META.get('HTTP_ACCEPT', ''):
+        if request.method == 'GET':
+            serializer = PersonSerializer(person)
+            return Response(serializer.data)
 
-        if request.META.get('HTTP_ACCEPT') == 'application/json':
-            # If the request accepts JSON response (e.g., Android app)
-            return JsonResponse(serializer.data)
-        else:
-            # If the request is from a web browser, render the HTML template
-            return render(request, 'hospital/person_details.html', {'person_data': serializer.data})
+        elif request.method == 'POST':
+            serializer = PersonSerializer(person, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
-        return JsonResponse({'error': 'Person not found'}, status=404)
+        # Return HTML template for web clients
+        if request.method == 'GET':
+            return render(request, 'hospital/person_details.html', {'person_data': person})
+        
+        elif request.method == 'POST':
+            # Update data based on the form data from the web client
+            person.name = request.data.get('name', person.name)
+            person.dob = request.data.get('dob', person.dob)
+            person.age = request.data.get('age', person.age)
+            person.gen = request.data.get('gen', person.gen)
+            person.email = request.data.get('email', person.email)
+            person.phn = request.data.get('phn', person.phn)
+            person.save()
 
-
+            # Return a success response
+            return redirect('success')
