@@ -9,27 +9,17 @@ li {
     padding: 0;
 }
 
-<<<<<<< HEAD
-.body {
-    font-family: 'Helvetica', Arial, sans-serif;
-    /* background-image: url('/static/images/bg image 1.jpg');     */
-    background-size: cover;
-/* body {
-=======
 body {
->>>>>>> b9f199d9affc30ae451ba13d047caa7dbc6d1436
+    font-family: 'Helvetica', Arial, sans-serif;
+    background-image: url('/static/images/ai.jpg');
+    background-size: cover;
     margin: 0;
     padding: 0;
-    background-image: url('../images/bg_image_1.jpg');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-<<<<<<< HEAD
-} */
-=======
 }
->>>>>>> b9f199d9affc30ae451ba13d047caa7dbc6d1436
 
 .container {
     max-width: 800px;
@@ -78,16 +68,6 @@ select:focus {
     outline: none;
     border-color: #1ebeb6;
 }
-
-/* select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    /* background-image: url("down-arrow.svg"); */
-    background-size: 12px 12px;
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-} */
 
 button {
     display: block;
