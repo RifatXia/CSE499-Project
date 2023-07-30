@@ -1,4 +1,4 @@
-@import url('https: //fonts.googleapis.com/css?family=Montserrat:100,200,300');
+/* @import url('https: //fonts.googleapis.com/css?family=Montserrat:100,200,300'); */
 
 :root{
 
@@ -28,7 +28,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('/Web App/images/bg image 1.jpg');
+    background-image: url('/static/images/bg_image_1.jpg');    
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
