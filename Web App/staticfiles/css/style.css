@@ -9,12 +9,6 @@ li {
     padding: 0;
 }
 
-<<<<<<< HEAD
-.body {
-    font-family: 'Helvetica', Arial, sans-serif;
-    background-image: url('/static/Web App/images/bg image 1.jpg');
-    background-size: cover;
-=======
 body {
     margin: 0;
     padding: 0;
@@ -23,7 +17,6 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
->>>>>>> 3d8e1aa1c9a42dbcb73b6a23286008fdc02e5c12
 }
 
 .container {
