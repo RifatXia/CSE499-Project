@@ -9,11 +9,15 @@ li {
     padding: 0;
 }
 
+<<<<<<< HEAD
 .body {
     font-family: 'Helvetica', Arial, sans-serif;
     /* background-image: url('/static/images/bg image 1.jpg');     */
     background-size: cover;
 /* body {
+=======
+body {
+>>>>>>> b9f199d9affc30ae451ba13d047caa7dbc6d1436
     margin: 0;
     padding: 0;
     background-image: url('../images/bg_image_1.jpg');
@@ -21,7 +25,11 @@ li {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+<<<<<<< HEAD
 } */
+=======
+}
+>>>>>>> b9f199d9affc30ae451ba13d047caa7dbc6d1436
 
 .container {
     max-width: 800px;
