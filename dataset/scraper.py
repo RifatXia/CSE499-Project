@@ -18,14 +18,20 @@ current_row = []
 for td in soup.find_all('td'):
     # Get text and remove leading/trailing spaces
     text = td.get_text(strip=True)
-    current_row.append(text)
+    text = ' '.join(text.split())   # Remove extra internal spaces
+    text = text.replace('"', '')    # Remove quotes
 
-    if len(current_row) == 3:  
+    # Split text by underscores "_" and take the last element
+    words = text.split('_')
+    word = words[-1] if words else ""
+    current_row.append(word)
+
+    if len(current_row) == 3:  # Each row has 3 columns
         data_rows.append(current_row)
         current_row = []
 
 # Create a CSV file and write the cleaned data
-csv_filename = "dataset/test.csv"
+csv_filename = "dataset/data_2.csv"
 with open(csv_filename, 'w', newline='', encoding='utf-8') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["Column 1", "Column 2", "Column 3"])  # Write header
