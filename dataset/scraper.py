@@ -27,11 +27,14 @@ for td in soup.find_all('td'):
     current_row.append(word)
 
     if len(current_row) == 3:  # Each row has 3 columns
+        if len(current_row[0]) > 0:
+            cap_word = current_row[0].title()
+            current_row[0] = cap_word
         data_rows.append(current_row)
         current_row = []
 
 # Create a CSV file and write the cleaned data
-csv_filename = "dataset/data_2.csv"
+csv_filename = "dataset/data_3.csv"
 with open(csv_filename, 'w', newline='', encoding='utf-8') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["Column 1", "Column 2", "Column 3"])  # Write header
