@@ -1,4 +1,0 @@
-Streamlit for the body of the model display
-HTML and CSS for the designing for the frontend
-React Native Android App
-RN Camera 
