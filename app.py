@@ -39,8 +39,13 @@ for i, selectbox_value in enumerate(st.session_state.selectbox_data['values']):
     if st.button(f"Remove Symptom {i + 1}"):
         remove_selectbox(i)
 
+user_input = []
+for data in symptoms:
+    user_input.append(data)
+    # user_input.append(symptoms_map[data])
+
 if st.button("Get Disease"):
-    pass
+    print(len(user_input))
     
 # cnt = st.session_state.selectbox_data['count']
 
