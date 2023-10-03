@@ -11,7 +11,6 @@ st.title("Disease Detection")
 symptoms = pickle.load(open("symptoms.pkl", "rb"))
 pipe = pickle.load(open("model.pkl", "rb"))
 
-
 # Dynamic selection box 
 if 'selectbox_data' not in st.session_state:
     st.session_state.selectbox_data = {'count': 0, 'values': []}
@@ -32,7 +31,7 @@ if st.button("Add Symptom"):
 
 # Create selectboxes
 for i, selectbox_value in enumerate(st.session_state.selectbox_data['values']):
-    st.selectbox("Symptom 1", symptoms["Symptoms"].unique())
+    st.selectbox(f"Symptom {i + 1}", symptoms["Symptoms"].unique())
     if st.button(f"Remove Symptom {i + 1}"):
         remove_selectbox(i)
 
