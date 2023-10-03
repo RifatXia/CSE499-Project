@@ -10,6 +10,7 @@ st.title("Disease Detection")
 # importing the model and the pickle dataset 
 symptoms = pickle.load(open("symptoms.pkl", "rb"))
 pipe = pickle.load(open("model.pkl", "rb"))
+symptoms_list = symptoms.to_dict(orient='records')
 
 # Dynamic selection box 
 if 'selectbox_data' not in st.session_state:
@@ -30,13 +31,20 @@ if st.button("Add Symptom"):
     add_selectbox()
 
 # Create selectboxes
+symptoms_map = {symptom['Symptoms']: 0 for symptom in symptoms_list}
 for i, selectbox_value in enumerate(st.session_state.selectbox_data['values']):
-    st.selectbox(f"Symptom {i + 1}", symptoms["Symptoms"].unique())
+    # keeping track of the symptoms
+    disease_name = st.selectbox(f"Symptom {i + 1}", symptoms["Symptoms"].unique())
+    symptoms_map[disease_name] = 1
     if st.button(f"Remove Symptom {i + 1}"):
         remove_selectbox(i)
 
+if st.button("Get Disease"):
+    pass
+    
+# cnt = st.session_state.selectbox_data['count']
+
 # headings = ['Brand', 'Processor Brand','Processor Model','Generation','RAM','RAM Type','Storage Capacity','Battery Capacity']
-# heading_map = dict(zip(headings, ["NULL"] * len(headings)))
 # max_len = len(headings)
 
 # ind = 0
