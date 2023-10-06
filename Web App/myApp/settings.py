@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-@ttkwx#&&gpwsat55)!t_j3t0zlk@^w&vb5-#v=(_-z*ntm3_6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # the site that we would be working on 
 SITE_ID = 2
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',  
     'hospital',
     'users',
