@@ -82,14 +82,12 @@ if st.button("Show Key Points"):
     st.write("Identified Diseases:")
     st.write(list(matching_diseases))
 
-    # ...
-
     # Ask follow-up questions for each identified disease
     for disease in matching_diseases:
         st.write(f"Follow-up questions for {disease}:")
 
         # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_28'
-        symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom_{i}'].values[0] for i in range(1, 29)]
+        symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
 
         # Remove NaN values from symptoms_in_disease
         symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
