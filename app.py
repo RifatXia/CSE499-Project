@@ -52,7 +52,7 @@ if st.button("Get Disease"):
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
 
-dataset = pd.read_csv('dataset\processed_data_2.csv')
+dataset = pd.read_csv('dataset\merged_data.csv')
 
 # Create a text input box
 text = st.text_input("Enter your text:")
@@ -60,7 +60,7 @@ text = st.text_input("Enter your text:")
 #Create a button to display the key points:
 if st.button("Show Key Points"):
 # Process the text with spaCy
-   doc = nlp(text)
+ doc = nlp(text)
 
 # Extract key points
 # key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
