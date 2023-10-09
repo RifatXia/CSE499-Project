@@ -60,15 +60,15 @@ text = st.text_input("Enter your text:")
 #Create a button to display the key points:
 if st.button("Show Key Points"):
 # Process the text with spaCy
-   doc = nlp(text)
+    doc = nlp(text)
 
-# Extract key points
-# key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
-key_points = [token.text for token in doc if token.pos_ == "NOUN" or token.pos_ == "ADJ"]
+    # Extract key points
+    # key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
+    key_points = [token.text for token in doc if token.pos_ == "NOUN" or token.pos_ == "ADJ"]
 
-# Display the key points
-for point in key_points:
-    st.write(point)
+    # Display the key points
+    for point in key_points:
+        st.write(point)
 
 # Check if each key point is present in the dataset
     matching_diseases = set()
