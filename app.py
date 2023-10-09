@@ -53,7 +53,7 @@ symptoms_list = symptoms.to_dict(orient='records')
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
 
-dataset = pd.read_csv('dataset/merged_data.csv')
+dataset = pd.read_csv('dataset/merged_data_2.csv')
 
 # Create a text input box
 text = st.text_input("Enter your text:")
@@ -71,12 +71,12 @@ if st.button("Show Key Points"):
     for point in key_points:
         st.write(point)
 
-# Check if each key point is present in the dataset
+    # Check if each key point is present in the dataset
     matching_diseases = set()
 
     # Iterate through symptom columns
     for col in dataset.columns:
-        if col.startswith('Symptom_'):
+        if col.startswith('Symptom'):
             # Handle NaN values by filling them with an empty string
             matching_rows = dataset[dataset[col].fillna('').str.contains('|'.join(key_points), case=False, regex=True)]
             matching_diseases.update(matching_rows['Disease'])
