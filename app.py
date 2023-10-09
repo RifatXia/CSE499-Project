@@ -81,5 +81,3 @@ for point in key_points:
 
     # Display matching diseases
     st.write("Matching Diseases:", list(matching_diseases))
-
-
