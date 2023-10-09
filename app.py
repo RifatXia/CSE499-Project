@@ -53,7 +53,7 @@ symptoms_list = symptoms.to_dict(orient='records')
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
 
-dataset = pd.read_csv('dataset\merged_data.csv')
+dataset = pd.read_csv('dataset/merged_data_2.csv')
 
 # Create a text input box
 text = st.text_input("Enter your text:")
@@ -61,7 +61,11 @@ text = st.text_input("Enter your text:")
 #Create a button to display the key points:
 if st.button("Show Key Points"):
 # Process the text with spaCy
+<<<<<<< HEAD
    doc = nlp(text)
+=======
+    doc = nlp(text)
+>>>>>>> cd50201ec6fb6cbe674984cbdef426469dc55b53
 
     # Extract key points
     # key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
