@@ -63,6 +63,7 @@ if st.button("Show Key Points"):
    doc = nlp(text)
 
 # Extract key points
+# key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
 key_points = [token.text for token in doc if token.pos_ == "NOUN" or token.pos_ == "ADJ"]
 
 # Display the key points
