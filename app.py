@@ -61,41 +61,31 @@ text = st.text_input("Enter your text:")
 #Create a button to display the key points:
 if st.button("Show Key Points"):
 # Process the text with spaCy
-<<<<<<< HEAD
-   doc = nlp(text)
-=======
     doc = nlp(text)
->>>>>>> cd50201ec6fb6cbe674984cbdef426469dc55b53
 
     # Extract key points
     # key_points = [ent.text for ent in doc.ents if ent.label_ == "DISEASE"]
-   key_points = [token.text for token in doc if token.pos_ == "NOUN" or token.pos_ == "ADJ"]
+    key_points = [token.text for token in doc if token.pos_ == "NOUN" or token.pos_ == "ADJ"]
 
     # Display the key points
-   for point in key_points:
+    for point in key_points:
         st.write(point)
 
     # Check if each key point is present in the dataset
-   matching_diseases = set()
+    matching_diseases = set()
 
     # Iterate through symptom columns
-   for col in dataset.columns:
-        if col.startswith('Symptom_'):
+    for col in dataset.columns:
+        if col.startswith('Symptom'):
             # Handle NaN values by filling them with an empty string
             matching_rows = dataset[dataset[col].fillna('').str.contains('|'.join(key_points), case=False, regex=True)]
             matching_diseases.update(matching_rows['Disease'])
 
     # Display matching diseases
-   st.write("Matching Diseases:", list(matching_diseases))
-   # Ask follow-up questions for each identified disease
-   for disease in matching_diseases:
+    st.write("Matching Diseases:", list(matching_diseases))
+    # Ask follow-up questions for each identified disease
+    for disease in matching_diseases:
         st.write(f"Follow-up questions for {disease}:")
         # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_28'
         symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom_{i}'].values[0] for i in range(1, 29)]
         st.write(symptoms_in_disease)
-
-    
-
-
-
-
