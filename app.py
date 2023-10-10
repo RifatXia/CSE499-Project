@@ -82,16 +82,79 @@ if st.button("Show Key Points"):
     st.write("Identified Diseases:")
     st.write(list(matching_diseases))
 
+    # # Ask follow-up questions for each identified disease
+    # for disease in matching_diseases:
+    #     st.write(f"Follow-up questions for {disease}:")
+
+    #     # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_28'
+    #     symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
+
+    #     # Remove NaN values from symptoms_in_disease
+    #     symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
+
+    #     # Display symptoms for the disease
+        
+    #     st.write(", ".join(symptoms_in_disease))
+
+    # Ask follow-up questions for each identified disease
     # Ask follow-up questions for each identified disease
     for disease in matching_diseases:
         st.write(f"Follow-up questions for {disease}:")
 
-        # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_28'
-        symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
+        # Find the maximum symptom index for this disease
+        max_symptom_index = dataset.loc[dataset['Disease'] == disease, 'Symptom_Index'].max()
+
+        # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_max_symptom_index'
+        symptoms_in_disease = []
+        for i in range(1, max_symptom_index + 1):
+            # Check if the disease is present in the filtered dataset
+            if not dataset.loc[dataset['Disease'] == disease].empty:
+                # Append the symptom to the list
+                symptoms_in_disease.append(dataset.loc[dataset['Disease'] == disease, f'Symptom_{i}'].values[0])
 
         # Remove NaN values from symptoms_in_disease
         symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
 
         # Display symptoms for the disease
-        
+        st.write(f"Symptoms for {disease}:")
         st.write(", ".join(symptoms_in_disease))
+
+        # Ask follow-up questions dynamically based on symptoms
+        for symptom in symptoms_in_disease:
+            user_input = st.text_input(f"Do you have {symptom.lower()}? (yes/no)")
+
+            # Process user input and ask relevant follow-up questions
+            if user_input.lower() == 'yes':
+                # Ask additional questions based on your dataset
+                additional_questions = dataset.loc[dataset['Disease'] == disease, 'FollowUpQuestions'].values[0].split(',')
+
+                # Iterate through additional questions
+                for additional_question in additional_questions:
+                    user_response = st.text_input(f"{additional_question} (yes/no)")
+                    # Process user response and ask more questions or provide a result based on your logic
+
+            elif user_input.lower() == 'no':
+                # Ask different questions or narrow down possibilities based on user's response
+                other_symptom = st.text_input(f"Do you have an alternative symptom related to {symptom.lower()}?")
+
+                if other_symptom.lower() == 'yes':
+                    # Ask more questions based on your dataset
+                    additional_questions = dataset.loc[dataset['Disease'] == disease, 'AlternativeQuestions'].values[0].split(',')
+
+                    # Iterate through additional questions
+                    for additional_question in additional_questions:
+                        user_response = st.text_input(f"{additional_question} (yes/no)")
+                        # Process user response and ask more questions or provide a result based on your logic
+
+                elif other_symptom.lower() == 'no':
+                    # Ask different questions or narrow down possibilities based on your dataset
+                    st.write("Provide result or ask further questions based on your logic...")
+
+                else:
+                    st.write("Invalid input. Please enter yes or no.")
+
+            
+
+
+
+    

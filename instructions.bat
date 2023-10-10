@@ -7,7 +7,7 @@ streamlit run app.py
 
 cd C:\Users\ASUS\Desktop\CSE499 Project\CSE499-Project
 conda activate myenv
-streamlit run app.py
+streamlit run app1.py
 
 
 pip install django-cors-headers
