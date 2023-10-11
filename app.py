@@ -97,7 +97,7 @@ if st.button("Show Key Points"):
     #     st.write(", ".join(symptoms_in_disease))
 
     # Ask follow-up questions for each identified disease
-    # Ask follow-up questions for each identified disease
+    cnt = 0
     for disease in matching_diseases:
         st.write(f"Follow-up questions for {disease}:")
 
@@ -132,7 +132,8 @@ if st.button("Show Key Points"):
 
         # Ask follow-up questions dynamically based on symptoms
         for symptom in symptoms_in_disease:
-            user_input = st.text_input(f"Do you have {symptom.lower()}? (yes/no)")
+            user_input = st.text_input(f"Do you have {symptom.lower()}? (yes/no)", key=cnt)
+            cnt += 1
 
             # Process user input and ask relevant follow-up questions
             if user_input.lower() == 'yes':
