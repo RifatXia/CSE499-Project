@@ -102,7 +102,18 @@ if st.button("Show Key Points"):
         st.write(f"Follow-up questions for {disease}:")
 
         # Find the maximum symptom index for this disease
-        max_symptom_index = dataset.loc[dataset['Disease'] == disease, 'Symptom_Index'].max()
+        # Assuming you have a variable 'disease' that holds the current disease name
+        max_symptom_index = 0
+
+        for i in range(1, 29):  # Assuming 28 is the maximum possible index
+            # Check if the disease is present in the filtered dataset
+            if not dataset.loc[dataset['Disease'] == disease].empty:
+                # Check if the symptom column is not empty for the given disease
+                if not dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].isna().all():
+                    max_symptom_index = i
+
+# Now 'max_symptom_index' holds the highest numbered symptom for the current disease
+
 
         # Assuming symptoms are stored in columns like 'Symptom_1', 'Symptom_2', ..., 'Symptom_max_symptom_index'
         symptoms_in_disease = []
@@ -110,7 +121,7 @@ if st.button("Show Key Points"):
             # Check if the disease is present in the filtered dataset
             if not dataset.loc[dataset['Disease'] == disease].empty:
                 # Append the symptom to the list
-                symptoms_in_disease.append(dataset.loc[dataset['Disease'] == disease, f'Symptom_{i}'].values[0])
+                symptoms_in_disease.append(dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0])
 
         # Remove NaN values from symptoms_in_disease
         symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
@@ -152,9 +163,3 @@ if st.button("Show Key Points"):
 
                 else:
                     st.write("Invalid input. Please enter yes or no.")
-
-            
-
-
-
-    
