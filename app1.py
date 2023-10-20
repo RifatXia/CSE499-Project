@@ -59,7 +59,7 @@ while user_input:
         st.write(", ".join(symptoms_in_disease))
 
         # Ask follow-up questions dynamically based on symptoms
-        # symptom_index = 0  # Reset the symptom_index to 0 for each disease
+        # syjmptom_index = 0  # Reset the symptom_index to 0 for each disease
         # while symptom_index < len(symptoms_in_disease):
         #     symptom = symptoms_in_disease[symptom_index]
         #     unique_key = f'{disease}_{symptom.lower()}_{widget_id}'
