@@ -18,11 +18,8 @@ nlp = spacy.load('en_core_web_sm')
 # Load the dataset
 dataset = pd.read_csv('dataset/merged_data.csv')
 
-# Initialize user input and widget_id
+# Initialize user input
 user_input = st.text_input("Describe your symptoms:")
-widget_id = 0
-
-
 
 while user_input:
     # Process the text with spaCy
@@ -63,6 +60,7 @@ while user_input:
 
         # Ask follow-up questions dynamically based on symptoms
         symptom_index = 0  # Reset the symptom_index to 0 for each disease
+        widget_id = 0  # Reset the widget_id to 0 for each disease
         while symptom_index < len(symptoms_in_disease):
             symptom = symptoms_in_disease[symptom_index]
             unique_key = f"{disease}_{symptom.lower()}_{widget_id}"
@@ -72,6 +70,7 @@ while user_input:
             if user_input.lower() == 'yes':
                 # Move on to the next symptom
                 symptom_index += 1
+                widget_id += 1
                 unique_key = f"{disease}_{symptom.lower()}_{widget_id}"  # Update unique_key
             elif user_input.lower() == 'no':
                 # Ask follow-up questions based on the next symptom
@@ -82,8 +81,6 @@ while user_input:
                     # Process user input and move on to the next symptom or disease
                     if user_input.lower() == 'yes':
                         symptom_index += 1
-                         
-                       
                     else:
                         break
                 else:
@@ -91,10 +88,9 @@ while user_input:
                     break
 
         # If all symptoms for the disease are covered, move on to the next disease
-        if symptom_index == len(4):
+        if symptom_index == len(symptoms_in_disease):
             st.write(f"Predicted Disease: {disease}")
-            break
-    widget_id += 1
+
     # Ask for new symptoms or end the conversation
     user_input = st.text_input("Describe more symptoms or type 'end' to finish:")
     if user_input.lower() == 'end':
