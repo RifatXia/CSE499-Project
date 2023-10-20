@@ -62,40 +62,41 @@ while user_input:
         st.write(", ".join(symptoms_in_disease))
 
         # Ask follow-up questions dynamically based on symptoms
-        symptom_index = 0  # Reset the symptom_index to 0 for each disease
-        while symptom_index < len(symptoms_in_disease):
-            symptom = symptoms_in_disease[symptom_index]
-            unique_key = f"{disease}_{symptom.lower()}_{widget_id}"
-            user_input = st.text_input(f"Do you have {symptom.lower()}? (yes/no)", key=unique_key)
+        # symptom_index = 0  # Reset the symptom_index to 0 for each disease
+        # while symptom_index < len(symptoms_in_disease):
+        #     symptom = symptoms_in_disease[symptom_index]
+        #     unique_key = f'{disease}_{symptom.lower()}_{widget_id}'
+        #     st.title(unique_key)
+        #     user_input = st.text_input(f"Do you have {symptom.lower()}? (yes/no)", key=unique_key)
+        #     symptom_index += 1
 
-            # Process user input and ask relevant follow-up questions
-            if user_input.lower() == 'yes':
-                # Move on to the next symptom
-                symptom_index += 1
-                unique_key = f"{disease}_{symptom.lower()}_{widget_id}"  # Update unique_key
-            elif user_input.lower() == 'no':
-                # Ask follow-up questions based on the next symptom
-                if symptom_index + 1 < len(symptoms_in_disease):
-                    next_symptom = symptoms_in_disease[symptom_index + 1]
-                    user_input = st.text_input(f"Do you have {next_symptom.lower()}? (yes/no)")
+        #     # Process user input and ask relevant follow-up questions
+        #     if user_input.lower() == 'yes':
+        #         # Move on to the next symptom
+        #         symptom_index += 1
+        #         unique_key = f"{disease}_{symptom.lower()}_{widget_id}"  # Update unique_key
+        #     elif user_input.lower() == 'no':
+        #         # Ask follow-up questions based on the next symptom
+        #         if symptom_index + 1 < len(symptoms_in_disease):
+        #             next_symptom = symptoms_in_disease[symptom_index + 1]
+        #             user_input = st.text_input(f"Do you have {next_symptom.lower()}? (yes/no)")
                     
-                    # Process user input and move on to the next symptom or disease
-                    if user_input.lower() == 'yes':
-                        symptom_index += 1
+    #                 # Process user input and move on to the next symptom or disease
+    #                 if user_input.lower() == 'yes':
+    #                     symptom_index += 1
                          
                        
-                    else:
-                        break
-                else:
-                    # If there are no more symptoms, move on to the next disease
-                    break
+    #                 else:
+    #                     break
+    #             else:
+    #                 # If there are no more symptoms, move on to the next disease
+    #                 break
 
-        # If all symptoms for the disease are covered, move on to the next disease
-        if symptom_index == len(4):
-            st.write(f"Predicted Disease: {disease}")
-            break
-    widget_id += 1
-    # Ask for new symptoms or end the conversation
-    user_input = st.text_input("Describe more symptoms or type 'end' to finish:")
-    if user_input.lower() == 'end':
-        break
+    #     # If all symptoms for the disease are covered, move on to the next disease
+    #     if symptom_index == len(4):
+    #         st.write(f"Predicted Disease: {disease}")
+    #         break
+    # # Ask for new symptoms or end the conversation
+    # user_input = st.text_input("Describe more symptoms or type 'end' to finish:")
+    # if user_input.lower() == 'end':
+    #     break
