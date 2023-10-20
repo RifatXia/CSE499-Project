@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
+from .models import Doctor
 
 def add_person(request):
     if request.method == 'POST':
@@ -66,3 +67,8 @@ def get_person(request, user_id):
 
             # Return a success response
             return redirect('success')
+        
+def doctor_list(request):
+    doctors = Doctor.objects.all()
+    # return render(request, 'doctors_info.html', {'doctors': doctors})
+    return render(request, 'hospital/doctors_info.html', {'doctors': doctors})
