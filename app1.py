@@ -18,11 +18,8 @@ nlp = spacy.load('en_core_web_sm')
 # Load the dataset
 dataset = pd.read_csv('dataset/merged_data.csv')
 
-# Initialize user input and widget_id
+# Initialize user input
 user_input = st.text_input("Describe your symptoms:")
-widget_id = 0
-
-
 
 while user_input:
     # Process the text with spaCy
