@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor List</title>
+</head>
+
+<body>
+    <h1>Doctor List</h1>
+
+    {% for doctor in doctors %}
+    <div>
+        <h2>{{ doctor.name }}</h2>
+        <img src="{{ doctor.image.url }}" alt="{{ doctor.name }} Image" width="200">
+        <!-- Add other fields as needed -->
+    </div>
+    {% endfor %}
+</body>
+
+</html>
