@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,16 +7,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_details.css' %}">
+
 </head>
 
 <body>
-    <h1>Doctor List</h1>
+    <h1>Welcome to Copper Hospital</h1>
+    <h1>Doctor's list</h1>
 
     {% for doctor in doctors %}
-    <div>
-        <h2>{{ doctor.name }}</h2>
-        <img src="{{ doctor.image.url }}" alt="{{ doctor.name }} Image" width="200">
-        <!-- Add other fields as needed -->
+    <div class="container">
+
+            <h2>{{ doctor.name }}</h2>
+            <img src="{{ doctor.image.url }}" alt="{{ doctor.name }} Image" width="200">
+            <p>Date of Birth: {{ doctor.dob }}</p>
+            <p>Age: {{ doctor.age }}</p>
+            <p>Gender: {{ doctor.gen }}</p>
+            <p>Email: {{ doctor.email }}</p>
+            <p>Phone: {{ doctor.phn }}</p>
+            <p>Degree: {{ doctor.degree }}</p>
+            <p>Specialization: {{ doctor.specialization }}</p>
+
+        
     </div>
     {% endfor %}
 </body>

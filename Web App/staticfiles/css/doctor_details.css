@@ -1,0 +1,31 @@
+.body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+}
+.h1 {
+        text-align: center;
+        padding: 20px;
+        background-color: #333;
+        color: #fff;
+    
+
+}
+
+.container {
+        background: linear-gradient(135deg, #1ebeb6, #87ceeb);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #ffffff;
+        animation: gradientAnimation 5s linear infinite;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 30px;
+        width: 500px;
+        text-align: center;
+        align-items: center;
+    
+
+}
