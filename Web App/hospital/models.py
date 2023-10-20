@@ -13,6 +13,6 @@ class Person(models.Model):
         return self.name
 
 class Doctor(Person):
-    image = models.ImageField(default='static/images/ai.jpg',upload_to='Web App\static\images\doctor_images')
+    image = models.ImageField(default='static/images/ai.jpg',upload_to='static/images/doctor_images')
     degree = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
