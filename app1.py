@@ -54,10 +54,6 @@ while user_input:
         # Remove NaN values from symptoms_in_disease
         symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
 
-        # Display symptoms for the disease
-        st.write(f"Symptoms for {disease}:")
-        st.write(", ".join(symptoms_in_disease))
-
         # Ask follow-up questions dynamically based on symptoms
         # syjmptom_index = 0  # Reset the symptom_index to 0 for each disease
         # while symptom_index < len(symptoms_in_disease):
