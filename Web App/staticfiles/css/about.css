@@ -1,29 +1,45 @@
-body{
 
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.content-box {
+    max-width: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('Web App/static/images/bgimage1.jpg');
-    
-        
+    justify-content: center;
 }
-
 .container {
-    background: linear-gradient(135deg, #1ebeb6, #87ceeb);
-    padding: 20px;
+    background: rgba(255,255,255,.2);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #ffffff;
-    animation: gradientAnimation 5s linear infinite;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 30px;
-    width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    color: black;
+    width: 50%;
+    height: 150px;
+    margin-bottom: 40px;
+    margin-top: 10px;
     text-align: center;
     align-items: center;
-
-
+    position: relative;
+    padding: 50px;
+} 
+.box {
+    background: rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    color: black;
+    width: 30%;
+    height: 180px;
+    border: 2px ;
+    margin: 8px 10px;
+    display: inline-block;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
 }
+.box:hover {
+    transform: scale(1.1);
+}
+
+.box:active {
+    transform: scale(1.2);
+}
+
+
+

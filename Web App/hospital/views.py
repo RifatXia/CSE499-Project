@@ -80,3 +80,9 @@ def get_doctor(request,keyword):
 def about(request):
     return render(request, 'hospital/about.html')
 
+def contact(request):
+    return render(request, 'hospital/contact.html')
+
+def home(request):
+    return render(request, 'hospital/homepage.html')
+
