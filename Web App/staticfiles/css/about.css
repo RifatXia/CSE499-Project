@@ -1,0 +1,29 @@
+body{
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('Web App/static/images/bgimage1.jpg');
+    
+        
+}
+
+.container {
+    background: linear-gradient(135deg, #1ebeb6, #87ceeb);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    animation: gradientAnimation 5s linear infinite;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 30px;
+    width: 500px;
+    text-align: center;
+    align-items: center;
+
+
+}

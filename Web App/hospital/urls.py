@@ -8,4 +8,6 @@ urlpatterns = [
     path('person/<int:user_id>/', views.get_person, name='get_person'),
     path('doctor_list/', views.doctor_list, name='doctor_list'),
     path('get_doctor/<str:specialization>/', views.get_doctor, name='get_doctor'),
+
+    path('about/', views.about, name='about'),
 ]
