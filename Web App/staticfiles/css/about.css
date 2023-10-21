@@ -6,7 +6,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('Web App/static/images/bgimage1.jpg');
+    background-image: url('/static/images/bgimage.jpg');
     
         
 }
@@ -16,7 +16,7 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #ffffff;
+    color: black;
     animation: gradientAnimation 5s linear infinite;
     border: 1px solid #ccc;
     padding: 10px;
