@@ -37,27 +37,28 @@ for col in symptom_columns:
     if not matching_rows.empty:
         matching_diseases.update(matching_rows['Disease'])
 
-symptom_frequency = {}
-for disease in matching_diseases:
-        symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
-        symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)] 
+step = 5
+while step > 0:
+    step -= 1
 
-        # Remove symptoms mentioned by the user
-        symptoms_in_disease = [symptom for symptom in symptoms_in_disease if symptom not in key_points]
+    symptom_frequency = {}
+    for disease in matching_diseases:
+            symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
+            symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)] 
 
-         # Update symptom frequency
-        for symptom in symptoms_in_disease:
-            if symptom in symptom_frequency:
-                symptom_frequency[symptom] += 1
-            else:
-                symptom_frequency[symptom] = 1
+            # Remove symptoms mentioned by the user
+            symptoms_in_disease = [symptom for symptom in symptoms_in_disease if symptom not in key_points]
 
-symptom_frequency = dict(sorted(symptom_frequency.items(), key=lambda item: item[1], reverse=True))
+            # Update symptom frequency
+            for symptom in symptoms_in_disease:
+                if symptom in symptom_frequency:
+                    symptom_frequency[symptom] += 1
+                else:
+                    symptom_frequency[symptom] = 1
 
-# Print the symptom frequencies
-st.write("Symptom Frequencies:")
-for symptom, frequency in symptom_frequency.items():
-    st.write(f"{symptom}: {frequency}")
+    symptom_frequency = dict(sorted(symptom_frequency.items(), key=lambda item: item[1], reverse=True))
+    symptom_check = list(symptom_frequency.items())[0][0]
+    take_input = st.text_input(f"Do you have {symptom_check.lower()}? (yes/no)")
 
 categories = {
     'uro': ['Urinary tract infection', 'Kidney Disease', 'Bladder Disorder'],
