@@ -72,3 +72,8 @@ def doctor_list(request):
     doctors = Doctor.objects.all()
     # return render(request, 'doctors_info.html', {'doctors': doctors})
     return render(request, 'hospital/doctors_info.html', {'doctors': doctors})
+
+def get_doctor(request,specialization):
+    doctors = Doctor.objects.filter(specialization=specialization)
+    # return render(request, 'doctors_info.html', {'doctors': doctors})
+    return render(request, 'hospital/doctors_info.html', {'doctors': doctors})
