@@ -1,0 +1,10 @@
+Psychiatrist:psy
+Cancer specialist:cancer
+Gastroenterology:gas
+Skin,Allergy:skin
+Medicine specialist:med
+Gynaecology Specialist:gyn
+Cardiology:car
+Arthroplasty,Orthopedics:art
+Ear, Nose, Throat Specialist:ear
+Urology:uro
