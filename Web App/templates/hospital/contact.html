@@ -1,20 +1,18 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
     <script src="{% static 'js/script.js' %}" defer></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_details.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
 </head>
 <header>
     <div class="logo"><img src="\static\images\logo.png" alt=""></div>
@@ -43,24 +41,20 @@
 </header>
 
 <body>
-    <h1>Doctor's list</h1>
-
-    {% for doctor in doctors %}
-    <div class="container">
-
-            <h2>{{ doctor.name }}</h2>
-            <img src="{{ doctor.image.url }}" alt="{{ doctor.name }} Image" width="200">
-            <p>Date of Birth: {{ doctor.dob }}</p>
-            <p>Age: {{ doctor.age }}</p>
-            <p>Gender: {{ doctor.gen }}</p>
-            <p>Email: {{ doctor.email }}</p>
-            <p>Phone: {{ doctor.phn }}</p>
-            <p style="color: red;">Degree: {{ doctor.degree }}</p>
-            <p style="color: red;">Specialization: {{ doctor.specialization }}</p>
-
-        
+    <div class="content-box">
+        <div class="container">
+            <h1>Contact US</h1>
+            <p class="larger-font">Email: <a href="mailto:cooper@example.com">info@example.com</a></p>
+            
+            <p class="larger-font">Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+            <address>
+                123 Main Street, Gulshan, Dhaka
+            </address>
+            
+        </div>
     </div>
-    {% endfor %}
+
+    
 </body>
 
 </html>

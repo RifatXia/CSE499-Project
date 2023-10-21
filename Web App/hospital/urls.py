@@ -10,4 +10,8 @@ urlpatterns = [
     path('get_doctor/<str:keyword>/', views.get_doctor, name='get_doctor'),
 
     path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    path('home/', views.home, name='home'),
+
+
 ]
