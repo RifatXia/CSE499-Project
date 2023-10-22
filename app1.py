@@ -40,11 +40,11 @@ if user_input:
         if not matching_rows.empty:
             matching_diseases.update(matching_rows['Disease'])
 
-    step = 5
+    next_step = True
     take_input = ''
-    while step > 0:
-        step -= 1
-
+    step_cnt = 0
+    while next_step:
+        next_step = False
         symptom_frequency = {}
         for disease in matching_diseases:
                 symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
@@ -63,27 +63,34 @@ if user_input:
         # choosing the most frequent symptom for the processing first
         symptom_frequency = dict(sorted(symptom_frequency.items(), key=lambda item: item[1], reverse=True))
         symptom_check = list(symptom_frequency.items())[0][0]
-        unique_key = f"{disease}_{symptom_check.lower()}_{step}"
+        unique_key = f"{disease}_{symptom_check.lower()}_{step_cnt}"
+        step_cnt += 1
         take_input = st.text_input(f"Do you have {symptom_check.lower()}? (yes/no)", key=unique_key)
 
-        diseases_to_remove = set()
+        if take_input:
+            diseases_to_remove = set()
 
-        # Check if the user input is "no"
-        if take_input.lower() == "no":
-            # Filter diseases that have the symptom and add them to diseases_to_remove
-            for disease in matching_diseases:
-                symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
-                symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
+            # Check if the user input is "no"
+            if take_input.lower() == "no":
+                # Filter diseases that have the symptom and add them to diseases_to_remove
+                for disease in matching_diseases:
+                    symptoms_in_disease = [dataset.loc[dataset['Disease'] == disease, f'Symptom {i}'].values[0] for i in range(1, 29)]
+                    symptoms_in_disease = [symptom for symptom in symptoms_in_disease if pd.notna(symptom)]
 
-                # Check if the symptom_check is in symptoms_in_disease
-                if symptom_check in symptoms_in_disease:
-                    diseases_to_remove.add(disease)
+                    # Check if the symptom_check is in symptoms_in_disease
+                    if symptom_check in symptoms_in_disease:
+                        diseases_to_remove.add(disease)
 
-            # Remove diseases from matching_diseases
-            matching_diseases.difference_update(diseases_to_remove)
+                # Remove diseases from matching_diseases
+                matching_diseases.difference_update(diseases_to_remove)
 
+            # Remove the symptom from symptom_frequency
+            del symptom_frequency[symptom_check]
             # Print upda`ted matching_diseases
             st.write(matching_diseases)
+            
+            # proceed onto the next step only if the user is done with the yes/no input 
+            next_step = True
 
 categories = {
     'uro': ['Urinary tract infection', 'Kidney Disease', 'Bladder Disorder'],
