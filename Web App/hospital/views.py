@@ -29,9 +29,6 @@ def success(request):
 def login(request):
     return render(request, 'hospital/login.html')
 
-from django.shortcuts import render
-from .models import Person
-
 # the method to fetch the user data and to edit it for both the android and the web
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -82,7 +79,3 @@ def about(request):
 
 def contact(request):
     return render(request, 'hospital/contact.html')
-
-def home(request):
-    return render(request, 'hospital/homepage.html')
-
