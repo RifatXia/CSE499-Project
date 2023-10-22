@@ -108,9 +108,10 @@ p{
 h1 {
     text-align: center;
     padding: 120px 10px 10px;
-    color: black;
+    color: #1ebeb6;
     display: flex;
     flex-direction: column;
+    font-size: 45px;
 }
 
 
@@ -128,10 +129,7 @@ h1 {
     cursor: pointer;
     margin-top: auto;
     align-self: flex-start;
-    margin: 0 auto;
-
-    
-       
+    margin: 0 auto;       
 }
 .button:hover {
     transform: scale(1.1);
@@ -140,4 +138,24 @@ h1 {
 .button:active {
     transform: scale(1.2);
 }
+
+.slide-container {
+    overflow: hidden;
+}
+
+.slide-text {
+    animation: slideFromRight 2s ease-in-out;
+    
+}
+
+@keyframes slideFromRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
 
