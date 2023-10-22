@@ -129,10 +129,7 @@ h1 {
     cursor: pointer;
     margin-top: auto;
     align-self: flex-start;
-    margin: 0 auto;
-
-    
-       
+    margin: 0 auto;       
 }
 .button:hover {
     transform: scale(1.1);
