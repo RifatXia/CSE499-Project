@@ -49,8 +49,9 @@
 
 
 <body>
-    <h1>Meet Our Specialist</h1>
-    
+    <div class="slide-container">
+        <h1 class="slide-text">Meet Our Specialist</h1>
+    </div> 
     {% for doctor in doctors %}
     <div class="container {% if forloop.counter <= 2 %}special-margin{% endif %}">
 
