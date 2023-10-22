@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{% static 'css/doctor_info.css' %}">
     
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/homepage.css' %}"> -->
     <script src="{% static 'js/script.js' %}" defer></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_details.css' %}">
+    
+
+    
 
 </head>
 <header>
@@ -40,16 +44,20 @@
         <div id="menu-bar" class="fa-solid fa-bars"></div>
         <div id="searchbox" class="fa-solid fa-magnifying-glass"></div>
     </div>
+    
 </header>
 
-<body>
-    <h1>Doctor's list</h1>
 
+<body>
+    <h1>Meet Our Specialist</h1>
+    
     {% for doctor in doctors %}
-    <div class="container">
+    <div class="container {% if forloop.counter <= 2 %}special-margin{% endif %}">
 
             <h2>{{ doctor.name }}</h2>
+            <br>
             <img src="{{ doctor.image.url }}" alt="{{ doctor.name }} Image" width="200">
+            <br>
             <p>Date of Birth: {{ doctor.dob }}</p>
             <p>Age: {{ doctor.age }}</p>
             <p>Gender: {{ doctor.gen }}</p>
@@ -57,6 +65,9 @@
             <p>Phone: {{ doctor.phn }}</p>
             <p style="color: red;">Degree: {{ doctor.degree }}</p>
             <p style="color: red;">Specialization: {{ doctor.specialization }}</p>
+            <br>
+            <button class="button" type="button">Make an Appointment</button>
+            
 
         
     </div>

@@ -1,0 +1,143 @@
+:root {
+
+
+    --color: #1ebeb6;
+    --primar-color: #efbb20;
+    --navbar-color: #2c353d;
+    --button-color: linear-gradient(90deg, rgba(30, 190, 182, 1) 0%, rgba(0, 130, 124, 1));
+    --box-shadow: 0 0 10px #e7e7e7;
+    --background: white;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    transition: .2s;
+    text-transform: capitalize;
+    transition: all .2s linear;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* background-image: url('/static/images/bgimage1.jpg'); */
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    scroll-behavior: smooth;
+
+}
+
+header {
+    background-color: var(--color);
+    width: 100%;
+    padding: 0rem 7%;
+    z-index: 1000;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+nav a {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 1.5rem;
+    text-decoration: none;
+}
+
+.menu-icons div {
+    color: white;
+    font-size: 2rem;
+    margin-left: 1.5rem;
+}
+
+#menu-bar {
+    display: none;
+}
+
+.container {
+    background: rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    color: black;
+    width: 45%;
+    height: 600px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    padding: 50px;
+    float: left;
+    margin-right: 30px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    
+
+}
+
+.container.special-margin {
+    margin-top: 100px;
+    /* Adjust margin as needed for the first two containers */
+}
+p{
+    font-size: 14px;
+}
+
+h1 {
+    text-align: center;
+    padding: 120px 10px 10px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.button {
+    border: none;
+    background-color: #1ebeb6;
+    color: black;
+    border-radius: 5px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: auto;
+    align-self: flex-start;
+    margin: 0 auto;
+
+    
+       
+}
+.button:hover {
+    transform: scale(1.1);
+}
+
+.button:active {
+    transform: scale(1.2);
+}
+

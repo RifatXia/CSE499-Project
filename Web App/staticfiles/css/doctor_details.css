@@ -3,12 +3,15 @@ body {
     margin: 0;
     padding: 0;
     background-color: white;
-    display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    /* display: flex;
+    justify-content: center;
     align-items: center;
-    /* background-image: url('Web App/static/images/bgimage1.jpg'); */
-    
+    height: 100vh;
+     */
 }
+
 h1 {
         text-align: center;
         padding: 20px;
@@ -17,18 +20,31 @@ h1 {
 }
 
 .container {
-        background: linear-gradient(135deg, #1ebeb6, #87ceeb);
-        padding: 20px;
+        padding: 80px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        color: #ffffff;
-        animation: gradientAnimation 5s linear infinite;
         border: 1px solid #ccc;
         padding: 10px;
         margin: 30px;
-        width: 500px;
+        width: 700px;
         text-align: center;
-        align-items: center;
-    
+        height: 700px;
+        background: rgba(255, 255, 255, .2);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        color: black;
+        
+}
+.btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+}
 
+/* Optional: Add hover effect */
+.btn:hover {
+        background-color: #45a049;
 }
