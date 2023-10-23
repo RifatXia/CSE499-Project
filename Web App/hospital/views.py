@@ -8,16 +8,12 @@ from rest_framework.decorators import api_view
 from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
-<<<<<<< HEAD
 from .models import Doctor
 from .models import Patient
-from .forms import PatientForm
-from .forms import PersonForm
-=======
+from .forms import PatientForm, PersonForm
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
->>>>>>> e741dda5798fc146282bd51b38f4fecbcb3b1893
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
@@ -91,20 +87,12 @@ def make_appointment(request, patient_id, doctor_id):
 
 def authentication(email,password):
     person = Person.objects.filter(email=email,password=password)
-    print(person)
-    if person == None:
-        return False
-    else:
-        return True
+    return person
     
-        
-
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        ans = authentication(email,password)
-        print(ans)
         if authentication(email,password):          
             return redirect('get_homepage')  # Adjust 'home' based on your URL pattern
         else:
