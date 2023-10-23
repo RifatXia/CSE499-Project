@@ -11,6 +11,9 @@ class Person(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Patient(Person):
+    address = models.CharField(max_length=200, default='Dhaka')
 
 class Doctor(Person):
     image = models.ImageField(default='static/images/ai.jpg',upload_to='static/images/doctor_images')
