@@ -3,27 +3,37 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import render, redirect
-from .forms import PersonForm
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
+<<<<<<< HEAD
+from .models import Doctor
+from .models import Patient
+from .forms import PatientForm
+from .forms import PersonForm
+=======
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+>>>>>>> e741dda5798fc146282bd51b38f4fecbcb3b1893
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Person
+from django.contrib.auth import authenticate,login
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password
+from django.http import HttpResponse
+
 
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
-        form = PersonForm(request.POST)
+        form = PatientForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_person')
+            return redirect('login')
     else:
-        form = PersonForm()
+        form = PatientForm()
 
     return render(request, 'hospital/add_person.html', {'form': form})
 
@@ -32,13 +42,14 @@ def success(request):
     return render(request, 'hospital/success.html')
 
 # def login(request):
-#     return render(request, 'hospital/login.html')
+     
+#      return render(request, 'hospital/login.html')
 
 # the method to fetch the user data and to edit it for both the android and the web
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def get_person(request, user_id):
-    person = get_object_or_404(Person, id=user_id)
+    person = get_object_or_404(Patient, id=user_id)
 
     # Return HTML template for web clients
     if request.method == 'GET':
@@ -52,6 +63,7 @@ def get_person(request, user_id):
         person.gen = request.data.get('gen', person.gen)
         person.email = request.data.get('email', person.email)
         person.phn = request.data.get('phn', person.phn)
+        person.password = request.data.get('password', person.password)
         person.save()
 
         # Return a success response
@@ -76,3 +88,26 @@ def contact(request):
 def make_appointment(request, patient_id, doctor_id):
     doctor = Doctor.objects.filter(id=doctor_id)
     patient = Patient.objects.filter(id=patient_id)
+
+def authentication(email,password):
+    person = Person.objects.filter(email=email,password=password)
+    print(person)
+    if person == None:
+        return False
+    else:
+        return True
+    
+        
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        ans = authentication(email,password)
+        print(ans)
+        if authentication(email,password):          
+            return redirect('get_homepage')  # Adjust 'home' based on your URL pattern
+        else:
+            return HttpResponse ('Invalid email or password. Please try again.')
+
+    return render(request, 'hospital/login.html',{'form': PersonForm()})
