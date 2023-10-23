@@ -8,10 +8,16 @@ from rest_framework.decorators import api_view
 from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
+<<<<<<< HEAD
 from .models import Doctor
 from .models import Patient
 from .forms import PatientForm
 from .forms import PersonForm
+=======
+from .models import Doctor, Patient, Appointment
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+>>>>>>> e741dda5798fc146282bd51b38f4fecbcb3b1893
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
@@ -78,6 +84,11 @@ def about(request):
 def contact(request):
     return render(request, 'hospital/contact.html')
 
+# make appointment with a doctor 
+def make_appointment(request, patient_id, doctor_id):
+    doctor = Doctor.objects.filter(id=doctor_id)
+    patient = Patient.objects.filter(id=patient_id)
+
 def authentication(email,password):
     person = Person.objects.filter(email=email,password=password)
     print(person)
@@ -100,11 +111,3 @@ def login(request):
             return HttpResponse ('Invalid email or password. Please try again.')
 
     return render(request, 'hospital/login.html',{'form': PersonForm()})
-
-
-
-
-
-
-
-
