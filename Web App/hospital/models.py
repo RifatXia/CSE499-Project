@@ -8,6 +8,7 @@ class Person(models.Model):
     gen = models.CharField(max_length=6)
     email = models.EmailField()
     phn = models.IntegerField()
+    password = models.CharField(max_length=100, default='123')
 
     def __str__(self):
         return self.name

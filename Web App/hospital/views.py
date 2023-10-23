@@ -13,10 +13,9 @@ from .models import Doctor
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm, ProfileUpdateForm
 from .models import Person
 
-
+# patient signup 
 def add_person(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
@@ -32,8 +31,8 @@ def add_person(request):
 def success(request):
     return render(request, 'hospital/success.html')
 
-def login(request):
-    return render(request, 'hospital/login.html')
+# def login(request):
+#     return render(request, 'hospital/login.html')
 
 # the method to fetch the user data and to edit it for both the android and the web
 @api_view(['GET', 'POST'])
@@ -41,35 +40,22 @@ def login(request):
 def get_person(request, user_id):
     person = get_object_or_404(Person, id=user_id)
 
-    # Check if the client wants JSON response (Android) or HTML response (Web)
-    if 'application/json' in request.META.get('HTTP_ACCEPT', ''):
-        if request.method == 'GET':
-            serializer = PersonSerializer(person)
-            return Response(serializer.data)
+    # Return HTML template for web clients
+    if request.method == 'GET':
+        return render(request, 'hospital/person_details.html', {'person_data': person})
+    
+    elif request.method == 'POST':
+        # Update data based on the form data from the web client
+        person.name = request.data.get('name', person.name)
+        person.dob = request.data.get('dob', person.dob)
+        person.age = request.data.get('age', person.age)
+        person.gen = request.data.get('gen', person.gen)
+        person.email = request.data.get('email', person.email)
+        person.phn = request.data.get('phn', person.phn)
+        person.save()
 
-        elif request.method == 'POST':
-            serializer = PersonSerializer(person, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        # Return HTML template for web clients
-        if request.method == 'GET':
-            return render(request, 'hospital/person_details.html', {'person_data': person})
-        
-        elif request.method == 'POST':
-            # Update data based on the form data from the web client
-            person.name = request.data.get('name', person.name)
-            person.dob = request.data.get('dob', person.dob)
-            person.age = request.data.get('age', person.age)
-            person.gen = request.data.get('gen', person.gen)
-            person.email = request.data.get('email', person.email)
-            person.phn = request.data.get('phn', person.phn)
-            person.save()
-
-            # Return a success response
-            return redirect('success')
+        # Return a success response
+        return redirect('success')
         
 def doctor_list(request):
     doctors = Doctor.objects.all()
