@@ -10,11 +10,7 @@ from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
 from .models import Doctor
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm, ProfileUpdateForm
-from .models import Person
+
 
 
 def add_person(request):
