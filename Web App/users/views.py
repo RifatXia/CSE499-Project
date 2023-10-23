@@ -4,6 +4,6 @@ from django.contrib.auth import logout
 def home(request):
     return render(request, 'hospital/homepage.html')
 
-def logout_view(request):
-    logout(request)
-    return redirect('/')
+# def logout_view(request):
+#     logout(request)
+#     return redirect('/')
