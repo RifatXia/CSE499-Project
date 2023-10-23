@@ -21,3 +21,12 @@ class Doctor(Person):
     degree = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     keyword = models.CharField(max_length=100)
+
+class Appointment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    scheduled_time = models.DateTimeField()
+
+    def __str__(self):
+        return self.patient.name + " with " + self.doctor.name
