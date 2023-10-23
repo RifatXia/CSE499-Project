@@ -19,6 +19,8 @@ from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
+from django.contrib.auth import logout as auth_logout
+
 
 
 # patient signup 
@@ -42,28 +44,28 @@ def success(request):
 #      return render(request, 'hospital/login.html')
 
 # the method to fetch the user data and to edit it for both the android and the web
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
-def get_person(request, user_id):
-    person = get_object_or_404(Patient, id=user_id)
+# @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+# def get_person(request, user_id):
+#     person = get_object_or_404(Patient, id=user_id)
 
-    # Return HTML template for web clients
-    if request.method == 'GET':
-        return render(request, 'hospital/person_details.html', {'person_data': person})
+#     # Return HTML template for web clients
+#     if request.method == 'GET':
+#         return render(request, 'hospital/person_details.html', {'person_data': person})
     
-    elif request.method == 'POST':
-        # Update data based on the form data from the web client
-        person.name = request.data.get('name', person.name)
-        person.dob = request.data.get('dob', person.dob)
-        person.age = request.data.get('age', person.age)
-        person.gen = request.data.get('gen', person.gen)
-        person.email = request.data.get('email', person.email)
-        person.phn = request.data.get('phn', person.phn)
-        person.password = request.data.get('password', person.password)
-        person.save()
+#     elif request.method == 'POST':
+#         # Update data based on the form data from the web client
+#         person.name = request.data.get('name', person.name)
+#         person.dob = request.data.get('dob', person.dob)
+#         person.age = request.data.get('age', person.age)
+#         person.gen = request.data.get('gen', person.gen)
+#         person.email = request.data.get('email', person.email)
+#         person.phn = request.data.get('phn', person.phn)
+#         person.password = request.data.get('password', person.password)
+#         person.save()
 
-        # Return a success response
-        return redirect('success')
+#         # Return a success response
+#         return redirect('success')
         
 def doctor_list(request):
     doctors = Doctor.objects.all()
@@ -99,3 +101,16 @@ def login(request):
             return HttpResponse ('Invalid email or password. Please try again.')
 
     return render(request, 'hospital/login.html',{'form': PersonForm()})
+
+@login_required
+def get_person(request):
+    person = request.user
+    user_id = person.id
+    print(user_id)
+    context = {'user id': user_id}
+    return render(request, 'hospital/person_details.html', context, {'person_data': person})
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('get_homepage') 
+
