@@ -8,8 +8,7 @@ from rest_framework.decorators import api_view
 from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
-from .models import Doctor
-from .models import Patient
+from .models import Doctor, Patient
 from .forms import PatientForm, PersonForm
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
@@ -20,8 +19,6 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
-
-
 
 # patient signup 
 def add_person(request):
@@ -114,3 +111,17 @@ def logout_view(request):
     auth_logout(request)
     return redirect('get_homepage') 
 
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from .forms import PersonForm, PatientForm
+
+def register_person(request):
+    if request.method == 'POST':
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_homepage')
+    else:
+        form = PatientForm()
+
+    return render(request, 'hospital/register_person.html', {'form': form})

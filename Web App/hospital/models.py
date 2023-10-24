@@ -1,35 +1,35 @@
-from django.contrib.auth.models import User
-from django.db import models
+# from django.contrib.auth.models import User
+# from django.db import models
 
-class Person(models.Model):
-    name = models.CharField(max_length=100)
-    dob = models.DateField()
-    age = models.IntegerField()
-    gen = models.CharField(max_length=6)
-    email = models.EmailField()
-    phn = models.IntegerField()
-    password = models.CharField(max_length=100, default='123')
+# class Person(models.Model):
+#     name = models.CharField(max_length=100)
+#     dob = models.DateField()
+#     age = models.IntegerField()
+#     gen = models.CharField(max_length=6)
+#     email = models.EmailField()
+#     phn = models.IntegerField()
+#     password = models.CharField(max_length=100, default='123')
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
     
-class Patient(Person):
-    address = models.CharField(max_length=200, default='Dhaka')
+# class Patient(Person):
+#     address = models.CharField(max_length=200, default='Dhaka')
 
-class Doctor(Person):
-    image = models.ImageField(default='static/images/ai.jpg',upload_to='static/images/doctor_images')
-    degree = models.CharField(max_length=100)
-    specialization = models.CharField(max_length=100)
-    keyword = models.CharField(max_length=100)
+# class Doctor(Person):
+#     image = models.ImageField(default='static/images/ai.jpg',upload_to='static/images/doctor_images')
+#     degree = models.CharField(max_length=100)
+#     specialization = models.CharField(max_length=100)
+#     keyword = models.CharField(max_length=100)
 
-class Appointment(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    scheduled_time = models.DateTimeField()
+# class Appointment(models.Model):
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+#     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+#     scheduled_time = models.DateTimeField()
 
-    def __str__(self):
-        return self.patient.name + " with " + self.doctor.name
+#     def __str__(self):
+#         return self.patient.name + " with " + self.doctor.name
 
 # from django.contrib.auth.models import User
 # from django.db import models
@@ -78,44 +78,44 @@ class Appointment(models.Model):
 #     def __str__(self):
 #         return f"{self.patient.name} with {self.doctor.name}"
 
-# from django.contrib.auth.models import User
-# from django.db import models
+from django.contrib.auth.models import User
+from django.db import models
 
-# class Person(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
-#     name = models.CharField(max_length=100)
-#     dob = models.DateField()
-#     age = models.IntegerField()
-#     gen = models.CharField(max_length=6)
-#     email = models.EmailField()
-#     phn = models.IntegerField()
-#     password = models.CharField(max_length=100)
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    dob = models.DateField()
+    age = models.IntegerField()
+    gen = models.CharField(max_length=6)
+    email = models.EmailField()
+    phn = models.IntegerField()
+    password = models.CharField(max_length=100, default='123')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        user, created = User.objects.get_or_create(username=self.email, email=self.email)
+        if created:
+            user.set_password(self.password)
+            user.save()
+
+        super(Person, self).save(*args, **kwargs)
 
 
-#     def __str__(self):
-#         return self.user.username
+class Patient(Person):
+    address = models.CharField(max_length=200, default='Dhaka')
 
-#     def save(self, *args, **kwargs):
-#         if not self.user:
-#             self.user = User(username=self.user.username)
-#         self.user.save()
+class Doctor(Person):
+    image = models.ImageField(default='static/images/ai.jpg', upload_to='static/images/doctor_images')
+    degree = models.CharField(max_length=100)
+    specialization = models.CharField(max_length=100)
+    keyword = models.CharField(max_length=100)
 
-#         super(Person, self).save(*args, **kwargs)
+class Appointment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    scheduled_time = models.DateTimeField()
 
-# class Patient(Person):
-#     address = models.CharField(max_length=200, default='Dhaka')
-
-# class Doctor(Person):
-#     image = models.ImageField(default='static/images/ai.jpg', upload_to='static/images/doctor_images')
-#     degree = models.CharField(max_length=100)
-#     specialization = models.CharField(max_length=100)
-#     keyword = models.CharField(max_length=100)
-
-# class Appointment(models.Model):
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-#     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-#     scheduled_time = models.DateTimeField()
-
-#     def __str__(self):
-#         return f"{self.patient.user.username} with {self.doctor.user.username}"
+    def __str__(self):
+        return f"{self.patient.name} with {self.doctor.name}"
