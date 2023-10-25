@@ -22,16 +22,24 @@ from django.contrib.auth import logout as auth_logout
 
 # patient signup 
 def add_person(request):
+    # if request.method == 'POST':
+    #     form = PatientForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('login')
+    # else:
+    #     form = PatientForm()
+
+    # return render(request, 'hospital/add_person.html', {'form': form})
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('get_homepage')
     else:
         form = PatientForm()
 
     return render(request, 'hospital/add_person.html', {'form': form})
-
 
 def success(request):
     return render(request, 'hospital/success.html')
@@ -115,13 +123,13 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from .forms import PersonForm, PatientForm
 
-def register_person(request):
-    if request.method == 'POST':
-        form = PatientForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('get_homepage')
-    else:
-        form = PatientForm()
+# def register_person(request):
+#     if request.method == 'POST':
+#         form = PatientForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('get_homepage')
+#     else:
+#         form = PatientForm()
 
-    return render(request, 'hospital/register_person.html', {'form': form})
+#     return render(request, 'hospital/register_person.html', {'form': form})
