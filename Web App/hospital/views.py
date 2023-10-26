@@ -19,18 +19,10 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.models import User
 
 # patient signup 
 def add_person(request):
-    # if request.method == 'POST':
-    #     form = PatientForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('login')
-    # else:
-    #     form = PatientForm()
-
-    # return render(request, 'hospital/add_person.html', {'form': form})
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
@@ -91,21 +83,47 @@ def contact(request):
 def make_appointment(request, patient_id, doctor_id):
     doctor = Doctor.objects.filter(id=doctor_id)
     patient = Patient.objects.filter(id=patient_id)
-
-def authentication(email,password):
-    person = Person.objects.filter(email=email,password=password)
-    return person
     
-def login(request):
+# def login(request):
+#     if request.method == 'POST':
+#         form = PersonForm(request.POST)
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         print(email, password)
+#         user = authenticate(request, email=email, password=password)
+
+#         if user is not None:
+#             return redirect('get_homepage')
+#         else:
+#             return HttpResponse('Invalid email or password. Please try again.')
+#     else:
+#         form = PersonForm()
+
+#     return render(request, 'hospital/login.html', {'form': form})
+
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+
+def login_view(request):
     if request.method == 'POST':
+        form = PersonForm(request.POST)
         email = request.POST.get('email')
         password = request.POST.get('password')
-        if authentication(email,password):          
-            return redirect('get_homepage')  # Adjust 'home' based on your URL pattern
-        else:
-            return HttpResponse ('Invalid email or password. Please try again.')
+        user = authenticate(request, username=email, password=password)
+        person = Patient.objects.get(email=email, password=password)
+        print(person)
 
-    return render(request, 'hospital/login.html',{'form': PersonForm()})
+        if user is not None:
+            login(request, user)
+            return redirect('get_homepage')
+        else:
+            return HttpResponse('Invalid email or password. Please try again.')
+    else:
+        form = PersonForm()
+
+    return render(request, 'hospital/login.html', {'form': form})
+
 
 @login_required
 def get_person(request):

@@ -5,7 +5,7 @@ from .models import Patient
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = '__all__'
+        fields = ['email', 'password']
 
 class PatientForm(forms.ModelForm):
     class Meta:
