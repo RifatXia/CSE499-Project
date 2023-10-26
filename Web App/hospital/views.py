@@ -26,7 +26,12 @@ def add_person(request):
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
-            form.save()
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            person = Patient.objects.filter(email=email, password=password).first()
+            
+            if person == None:
+                form.save()
             return redirect('get_homepage')
     else:
         form = PatientForm()
@@ -83,23 +88,6 @@ def contact(request):
 def make_appointment(request, patient_id, doctor_id):
     doctor = Doctor.objects.filter(id=doctor_id)
     patient = Patient.objects.filter(id=patient_id)
-    
-# def login(request):
-#     if request.method == 'POST':
-#         form = PersonForm(request.POST)
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         print(email, password)
-#         user = authenticate(request, email=email, password=password)
-
-#         if user is not None:
-#             return redirect('get_homepage')
-#         else:
-#             return HttpResponse('Invalid email or password. Please try again.')
-#     else:
-#         form = PersonForm()
-
-#     return render(request, 'hospital/login.html', {'form': form})
 
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
@@ -111,8 +99,6 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, username=email, password=password)
-        person = Patient.objects.get(email=email, password=password)
-        print(person)
 
         if user is not None:
             login(request, user)
