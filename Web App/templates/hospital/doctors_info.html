@@ -16,9 +16,6 @@
     
     <!-- <link rel="stylesheet" href="{% static 'css/homepage.css' %}"> -->
     <script src="{% static 'js/script.js' %}" defer></script>
-    
-
-    
 
 </head>
 <header>
@@ -68,7 +65,9 @@
             <p style="color: red;">Degree: {{ doctor.degree }}</p>
             <p style="color: red;">Specialization: {{ doctor.specialization }}</p>
             <br>
-            <button class="button" type="button">Make an Appointment</button>
+            <a href="{% url 'make_appointment' doctor.id %}">
+                <button class="button" type="button">Make an Appointment</button>
+            </a>
     </div>
     {% endfor %}
 </body>

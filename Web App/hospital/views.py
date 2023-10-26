@@ -9,7 +9,7 @@ from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
 from .models import Doctor, Patient
-from .forms import PatientForm, PersonForm
+from .forms import PatientForm, PersonForm, AppointmentForm
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -80,10 +80,25 @@ def about(request):
 def contact(request):
     return render(request, 'hospital/contact.html')
 
-# make appointment with a doctor 
-def make_appointment(request, patient_id, doctor_id):
-    doctor = Doctor.objects.filter(id=doctor_id)
-    patient = Patient.objects.filter(id=patient_id)
+# make appointment with a doctor
+@login_required 
+def make_appointment(request, doctor_id):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            patient_id = request.user.id - 1
+            patient = Patient.objects.get(id=patient_id)
+            doctor = Doctor.objects.get(id=doctor_id)
+            appointment = form.save(commit=False)
+            appointment.patient = patient
+            appointment.doctor = doctor
+            appointment.save()
+
+            return redirect('get_homepage')
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'hospital/appointment.html', {'form': form})
 
 # successful login of the user 
 def login_view(request):
