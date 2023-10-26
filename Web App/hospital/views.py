@@ -29,7 +29,7 @@ def add_person(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             person = Patient.objects.filter(email=email, password=password).first()
-            
+
             if person == None:
                 form.save()
             return redirect('get_homepage')
@@ -40,11 +40,7 @@ def add_person(request):
 
 def success(request):
     return render(request, 'hospital/success.html')
-
-# def login(request):
      
-#      return render(request, 'hospital/login.html')
-
 # the method to fetch the user data and to edit it for both the android and the web
 # @api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])
@@ -89,10 +85,7 @@ def make_appointment(request, patient_id, doctor_id):
     doctor = Doctor.objects.filter(id=doctor_id)
     patient = Patient.objects.filter(id=patient_id)
 
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-
+# successful login of the user 
 def login_view(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
@@ -110,30 +103,13 @@ def login_view(request):
 
     return render(request, 'hospital/login.html', {'form': form})
 
-
+# fetching the user information 
 @login_required
 def get_person(request):
-    person = request.user
-    user_id = person.id
-    print(user_id)
-    context = {'user id': user_id}
-    return render(request, 'hospital/person_details.html', context, {'person_data': person})
+    person_id = request.user.id - 1
+    patient = Patient.objects.get(id=person_id)
+    return render(request, 'hospital/person_details.html', {'person': patient})
 
 def logout_view(request):
     auth_logout(request)
     return redirect('get_homepage') 
-
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
-from .forms import PersonForm, PatientForm
-
-# def register_person(request):
-#     if request.method == 'POST':
-#         form = PatientForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('get_homepage')
-#     else:
-#         form = PatientForm()
-
-#     return render(request, 'hospital/register_person.html', {'form': form})
