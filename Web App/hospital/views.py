@@ -68,8 +68,8 @@ def send_email(patient,doctor,appointment):
 # make appointment with a doctor
 @login_required 
 def make_appointment(request, doctor_id):
-    patient_id = request.user.id - len(Doctor.objects.all()) - 2
-    patient = Patient.objects.get(id=patient_id)
+    user = User.objects.get(id=request.user.id)
+    patient = Patient.objects.get(email=user.username)
     doctor = Doctor.objects.get(id=doctor_id)
 
     if request.method == 'POST':
@@ -83,7 +83,6 @@ def make_appointment(request, doctor_id):
             appointment.scheduled_time = scheduled_time
             appointment.save()
             send_email(patient,doctor,appointment)
-            
 
             return redirect('get_homepage')
     else:
@@ -112,13 +111,17 @@ def login_view(request):
 # fetching the user information 
 @login_required
 def get_person(request):
-    person_id = request.user.id - len(Doctor.objects.all()) - 2
-    print(person_id)
-    patient = Patient.objects.get(id=person_id)
+    user = User.objects.get(id=request.user.id)
+    patient = Patient.objects.get(email=user.username)
+
     if request.method == 'POST':
         form = PatientForm(request.POST, instance=patient)
-        print(form)
         if form.is_valid():
+            # update user password in the User class too if the password gets changed 
+            password = form.cleaned_data['password']
+            user = User.objects.get(id=request.user.id)
+            user.password = password
+
             form.save()
             print('Profile updated successfully')
             return redirect('get_homepage')
