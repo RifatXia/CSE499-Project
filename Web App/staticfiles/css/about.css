@@ -62,3 +62,7 @@ address,h1,p.larger-font {
     font-size: 28px;
     /* Adjust the font size to your preference */
 }
+
+p {
+    font-size: 18px;
+}
