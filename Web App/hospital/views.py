@@ -90,6 +90,14 @@ def make_appointment(request, doctor_id):
 
     return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
 
+def fetch_appointments(request):
+    patient = Patient.objects.get(User.objects.get(id=request.user.id).username)
+    appointments = Appointment.objects.filter(patient_id=patient.id)
+    print(appointments)
+
+    return render(request, 'hospital/view_appointments.html', {'appointments' : appointments})
+
+
 # successful login of the user 
 def login_view(request):
     if request.method == 'POST':
@@ -115,10 +123,12 @@ def get_person(request):
     person = Person.objects.get(email=user.username)
     is_doctor = person.is_doctor 
 
+
     if is_doctor:
         doctor = Doctor.objects.get(email=user.username)
     else:
-        patient = Patient.objects.get(email=user.username)
+        patient = Patient.objects.get(email=User.objects.get(id=request.user.id).username)
+        appointments = Appointment.objects.filter(patient_id=patient.id)
 
     if request.method == 'POST':
 
@@ -142,8 +152,7 @@ def get_person(request):
         else:
             form = PatientForm(instance=patient)
 
-    return render(request, 'hospital/person_details.html', {'form': form})
-
+    return render(request, 'hospital/person_details.html', {'form': form, 'appointments': appointments})
 
 def logout_view(request):
     auth_logout(request)
