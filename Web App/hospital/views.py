@@ -126,6 +126,7 @@ def get_person(request):
 
     if is_doctor:
         doctor = Doctor.objects.get(email=user.username)
+        appointments = Appointment.objects.filter(doctor_id=doctor.id)
     else:
         patient = Patient.objects.get(email=User.objects.get(id=request.user.id).username)
         appointments = Appointment.objects.filter(patient_id=patient.id)
@@ -152,7 +153,7 @@ def get_person(request):
         else:
             form = PatientForm(instance=patient)
 
-    return render(request, 'hospital/person_details.html', {'form': form, 'appointments': appointments})
+    return render(request, 'hospital/person_details.html', {'form': form, 'appointments': appointments, 'is_doctor': is_doctor})
 
 def logout_view(request):
     auth_logout(request)

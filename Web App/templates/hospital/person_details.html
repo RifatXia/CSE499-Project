@@ -121,17 +121,20 @@
                     
                     <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
                             {% for appointment in appointments %}
-                                <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
+                                {% if is_doctor %}
+                                    <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.patient.name }}</p>
+                                {% else %}
+                                    <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
+                                {% endif %}
                             {% endfor %}
-                        {% endblock %}
-                        <!-- <h3 class="mb-4">Notification Settings</h3>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="notification1">
-                                <label class="form-check-label" for="notification1">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum accusantium
-                                    accusamus, neque cupiditate quis
-                                </label>
+                            <!-- <h3 class="mb-4">Notification Settings</h3>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="notification1">
+                                        <label class="form-check-label" for="notification1">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum accusantium
+                                            accusamus, neque cupiditate quis
+                                        </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -154,6 +157,7 @@
                             <button class="btn btn-primary">Update</button>
                             <button class="btn btn-light">Cancel</button>
                         </div> -->
+                        {% endblock %}
                     </div>
                 </div>
             </div>
