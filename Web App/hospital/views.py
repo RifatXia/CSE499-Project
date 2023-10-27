@@ -20,6 +20,8 @@ from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.mail import send_mail
 
 # patient signup 
 def add_person(request):
@@ -80,6 +82,13 @@ def about(request):
 def contact(request):
     return render(request, 'hospital/contact.html')
 
+def send_email(patient,doctor,appointment):
+    subject = 'Confirmation of Appointment'
+    message = f'Hi {patient.name}, Your appointment is confirmed for Dr. {doctor.name} {appointment.scheduled_time}'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [patient.email, ]
+    send_mail( subject, message, email_from, recipient_list )
+
 # make appointment with a doctor
 @login_required 
 def make_appointment(request, doctor_id):
@@ -97,6 +106,8 @@ def make_appointment(request, doctor_id):
             appointment.doctor = doctor
             appointment.scheduled_time = scheduled_time
             appointment.save()
+            send_email(patient,doctor,appointment)
+            
 
             return redirect('get_homepage')
     else:
