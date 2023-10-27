@@ -9,7 +9,7 @@ from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
 from .models import Doctor, Patient
-from .forms import PatientForm, PersonForm, AppointmentForm
+from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -112,10 +112,21 @@ def login_view(request):
 @login_required
 def get_person(request):
     user = User.objects.get(id=request.user.id)
-    patient = Patient.objects.get(email=user.username)
+    person = Person.objects.get(email=user.username)
+    is_doctor = person.is_doctor 
+
+    if is_doctor:
+        doctor = Doctor.objects.get(email=user.username)
+    else:
+        patient = Patient.objects.get(email=user.username)
 
     if request.method == 'POST':
-        form = PatientForm(request.POST, instance=patient)
+
+        if is_doctor:
+            form = DoctorForm(request.POST, instance=doctor)
+        else:
+            form = PatientForm(request.POST, instance=patient)
+
         if form.is_valid():
             # update user password in the User class too if the password gets changed 
             password = form.cleaned_data['password']
@@ -126,7 +137,11 @@ def get_person(request):
             print('Profile updated successfully')
             return redirect('get_homepage')
     else:
-        form = PatientForm(instance=patient)
+        if is_doctor:
+            form = DoctorForm(instance=doctor)
+        else:
+            form = PatientForm(instance=patient)
+
     return render(request, 'hospital/person_details.html', {'form': form})
 
 
