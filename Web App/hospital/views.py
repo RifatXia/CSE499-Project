@@ -68,7 +68,7 @@ def send_email(patient,doctor,appointment):
 # make appointment with a doctor
 @login_required 
 def make_appointment(request, doctor_id):
-    patient_id = request.user.id - len(Doctor.objects.all()) - 1
+    patient_id = request.user.id - len(Doctor.objects.all()) - 2
     patient = Patient.objects.get(id=patient_id)
     doctor = Doctor.objects.get(id=doctor_id)
 
@@ -112,7 +112,7 @@ def login_view(request):
 # fetching the user information 
 @login_required
 def get_person(request):
-    person_id = request.user.id - len(Doctor.objects.all()) - 1
+    person_id = request.user.id - len(Doctor.objects.all()) - 2
     print(person_id)
     patient = Patient.objects.get(id=person_id)
     if request.method == 'POST':
