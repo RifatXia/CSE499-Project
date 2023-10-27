@@ -126,10 +126,10 @@ def get_person(request):
 
     if is_doctor:
         doctor = Doctor.objects.get(email=user.username)
-        appointments = Appointment.objects.filter(doctor_id=doctor.id)
+        appointments = Appointment.objects.filter(doctor_id=doctor.id).order_by('scheduled_time')
     else:
         patient = Patient.objects.get(email=User.objects.get(id=request.user.id).username)
-        appointments = Appointment.objects.filter(patient_id=patient.id)
+        appointments = Appointment.objects.filter(patient_id=patient.id).order_by('scheduled_time') 
 
     if request.method == 'POST':
 
