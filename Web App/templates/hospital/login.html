@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/login.css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
     <title>Cooper Hospital</title>
 </head>
@@ -33,7 +33,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Login</button>
+            <button class="button" type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="{% url 'add_person' %}">Sign up</a></p>
         {% endblock %}
