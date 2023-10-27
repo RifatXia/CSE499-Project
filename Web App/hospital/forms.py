@@ -6,10 +6,22 @@ class PersonForm(forms.ModelForm):
         model = Person
         fields = ['email', 'password']
 
+
 class PatientForm(forms.ModelForm):
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Others', 'Others'),
+    ]
+
+    gen = forms.ChoiceField(choices=GENDER_CHOICES, required=True)
     class Meta:
         model = Patient
         fields = '__all__'
+        widgets = {
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+            'address': forms.TextInput(),  # Leave the widget for address as default
+        }
 
     def clean_age(self):
         age = self.cleaned_data['age']
