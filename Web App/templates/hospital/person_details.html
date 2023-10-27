@@ -22,7 +22,7 @@
                         <div class="img-circle text-center mb-3">
                             <img src="/static/images/avatar.jpg" alt="Image" class="shadow">
                         </div>
-                        <h4 class="text-center">Prome</h4>
+                       
                     </div>
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
@@ -40,15 +40,31 @@
                 <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <h3 class="mb-4">Account Information</h3>
-                        {% block content %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                {{ form.as_p }}
-                            </div>
-                            <button type="submit">Submit</button>
-                        </form>
-                        {% endblock %}
+                        <div class="container">
+                            {% block content %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                    
+                                            {{ form.as_p }}
+                                    
+                                            
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                
+                                </div>
+                                
+                            </form>
+                            {% endblock %}
+                        
+                        </div>
                         <!-- Update the form's action attribute to 'get_person' -->
                         <!-- <form method="POST" action="{% url 'get_person' %}">
                             {% csrf_token %} -->
