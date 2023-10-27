@@ -83,22 +83,26 @@ def contact(request):
 # make appointment with a doctor
 @login_required 
 def make_appointment(request, doctor_id):
+    patient_id = request.user.id - len(Doctor.objects.all()) - 1
+    patient = Patient.objects.get(id=patient_id)
+    doctor = Doctor.objects.get(id=doctor_id)
+
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
-            patient_id = request.user.id - len(Doctor.objects.all()) - 2
-            patient = Patient.objects.get(id=patient_id)
-            doctor = Doctor.objects.get(id=doctor_id)
+            scheduled_time = form.cleaned_data['scheduled_time']
+            # Create the appointment
             appointment = form.save(commit=False)
             appointment.patient = patient
             appointment.doctor = doctor
+            appointment.scheduled_time = scheduled_time
             appointment.save()
 
             return redirect('get_homepage')
     else:
         form = AppointmentForm()
 
-    return render(request, 'hospital/appointment.html', {'form': form})
+    return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
 
 # successful login of the user 
 def login_view(request):
@@ -121,11 +125,21 @@ def login_view(request):
 # fetching the user information 
 @login_required
 def get_person(request):
-    person_id = request.user.id - len(Doctor.objects.all()) - 2
+    person_id = request.user.id - len(Doctor.objects.all()) - 1
     print(person_id)
     patient = Patient.objects.get(id=person_id)
-    return render(request, 'hospital/person_details.html', {'person': patient})
+    if request.method == 'POST':
+        form = PatientForm(request.POST, instance=patient)
+        print(form)
+        if form.is_valid():
+            form.save()
+            print('Profile updated successfully')
+            return redirect('get_homepage')
+    else:
+        form = PatientForm(instance=patient)
+    return render(request, 'hospital/person_details.html', {'form': form})
+
 
 def logout_view(request):
     auth_logout(request)
-    return redirect('get_homepage') 
+    return redirect('get_homepage')
