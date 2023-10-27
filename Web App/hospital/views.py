@@ -42,30 +42,6 @@ def add_person(request):
 
 def success(request):
     return render(request, 'hospital/success.html')
-     
-# the method to fetch the user data and to edit it for both the android and the web
-# @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def get_person(request, user_id):
-#     person = get_object_or_404(Patient, id=user_id)
-
-#     # Return HTML template for web clients
-#     if request.method == 'GET':
-#         return render(request, 'hospital/person_details.html', {'person_data': person})
-    
-#     elif request.method == 'POST':
-#         # Update data based on the form data from the web client
-#         person.name = request.data.get('name', person.name)
-#         person.dob = request.data.get('dob', person.dob)
-#         person.age = request.data.get('age', person.age)
-#         person.gen = request.data.get('gen', person.gen)
-#         person.email = request.data.get('email', person.email)
-#         person.phn = request.data.get('phn', person.phn)
-#         person.password = request.data.get('password', person.password)
-#         person.save()
-
-#         # Return a success response
-#         return redirect('success')
         
 def doctor_list(request):
     doctors = Doctor.objects.all()
