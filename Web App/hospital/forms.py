@@ -26,7 +26,7 @@ class PatientForm(forms.ModelForm):
     gen = forms.ChoiceField(choices=GENDER_CHOICES, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     class Meta:
         model = Patient
-        fields = ['name', 'dob', 'age', 'gen', 'email', 'password', 'phn']
+        fields = ['name', 'dob', 'age', 'gen', 'email', 'password', 'phn', 'address']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -35,9 +35,10 @@ class PatientForm(forms.ModelForm):
             'gen': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
             'phn': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(render_value=True, attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
         }
+
 
     def clean_age(self):
         age = self.cleaned_data['age']
@@ -64,7 +65,7 @@ class DoctorForm(forms.ModelForm):
             'gen': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
             'phn': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(render_value=True, attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
         }
 

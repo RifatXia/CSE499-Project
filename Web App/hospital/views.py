@@ -1,5 +1,4 @@
 from base64 import urlsafe_b64encode
-from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from .models import Person, Doctor, Patient, Appointment
 from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
@@ -18,6 +17,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.utils.http import urlsafe_base64_encode
 from .forms import CustomPasswordResetForm
+from django.contrib import messages
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
