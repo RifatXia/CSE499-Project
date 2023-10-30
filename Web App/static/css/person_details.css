@@ -3,21 +3,25 @@
 body {
     background: white;
     font-family: "Roboto", sans-serif;
-    background-image: url(/Web/);
+    background-image: url('/static/images/bgimage1.jpg');
 }
+
 .container {
     background: linear-gradient(135deg, #1ebeb6, #87ceeb);
-    padding:20px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #ffffff;
     animation: gradientAnimation 5s linear infinite;
+    
 }
+
 h4,
 h3 {
     color: #000000;
     /* Set the color to black */
 }
+
 .shadow {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
 }
@@ -32,11 +36,16 @@ h3 {
 
 .form-group {
     /* background: linear-gradient(180deg, #87ceeb, #1e90ff); */
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: black;
     margin-bottom: 1.5rem;
+    margin-bottom: 50px;
+}
+
+.container-lg {
+    width: 500px;
 }
 
 .nav-pills a.nav-link {

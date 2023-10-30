@@ -26,9 +26,6 @@ body {
     right: 660px;
 }
 
-p {
-    font-size: 18px;
-}
 
 .button {
     border: none;
@@ -54,3 +51,4 @@ p {
 .button:active {
     transform: scale(1.2);
 }
+
