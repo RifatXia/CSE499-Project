@@ -16,12 +16,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.utils.http import urlsafe_base64_encode
-<<<<<<< HEAD
-from .forms import *
-=======
 from .forms import CustomPasswordResetForm
 from django.contrib import messages
->>>>>>> a3b28099cf9867ef19f935604a46b743203c6ccd
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
@@ -166,32 +162,7 @@ def logout_view(request):
     auth_logout(request)
     return redirect('get_homepage')
 
-# views to handle the forgot password 
-# class CustomPasswordResetView(PasswordResetView):
-#     email_template_name = 'password/custom_password_reset_email.html'
-#     success_url = reverse_lazy('custom_password_reset_done')
-#     subject_template_name = 'password/custom_password_reset_subject.txt'
-#     template_name = 'password/custom_password_reset_form.html'
-#     extra_email_context = {'person_model': Person}
-
-#     def form_valid(self, form):
-#         email = form.cleaned_data['email']
-#         person = Person.objects.get(email=email)
-
-#         uid = urlsafe_base64_encode(force_bytes(person.pk))
-#         token = default_token_generator.make_token(person)
-#         token_url = reverse_lazy('custom_password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
-
-#         # Send an email with the reset link
-#         subject = 'Password reset'
-#         message = render_to_string('password/custom_password_reset_email.html', {
-#             'reset_url': self.request.build_absolute_uri(token_url),
-#         })
-#         from_email = settings.EMAIL_HOST_USER
-#         send_mail(subject, message, from_email, [email])
-
-#         return super().form_valid(form)
-
+# views to implement forgot password
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'password/custom_password_reset_email.html'
     success_url = reverse_lazy('custom_password_reset_done')
