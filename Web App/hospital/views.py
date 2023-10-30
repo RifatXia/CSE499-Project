@@ -59,9 +59,16 @@ def send_email(patient,doctor,appointment):
     recipient_list = [patient.email, ]
     send_mail( subject, message, email_from, recipient_list )
 
+from django.contrib.auth.decorators import login_required
+
+
+
 # make appointment with a doctor
-@login_required 
 def make_appointment(request, doctor_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Please log in first.')
+        return redirect('login')
+    
     user = User.objects.get(id=request.user.id)
     patient = Patient.objects.get(email=user.username)
     doctor = Doctor.objects.get(id=doctor_id)
@@ -83,6 +90,7 @@ def make_appointment(request, doctor_id):
         form = AppointmentForm()
 
     return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
+
 
 def fetch_appointments(request):
     patient = Patient.objects.get(User.objects.get(id=request.user.id).username)
@@ -108,6 +116,7 @@ def login_view(request):
         form = PersonForm()
 
     return render(request, 'hospital/login.html', {'form': form})
+
 
 # fetching the user information 
 @login_required
