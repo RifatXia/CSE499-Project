@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Person
-from .serializers import PersonSerializer
 from django.http import JsonResponse
 from .models import Doctor, Patient
 from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
