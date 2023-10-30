@@ -89,6 +89,7 @@ class Person(models.Model):
     email = models.EmailField()
     phn = models.IntegerField()
     password = models.CharField(max_length=100)
+    is_doctor = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -110,6 +111,10 @@ class Doctor(Person):
     degree = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     keyword = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        self.is_doctor = True
+        super(Doctor, self).save(*args, **kwargs)
 
 class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

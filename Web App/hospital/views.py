@@ -9,7 +9,7 @@ from .models import Person
 from .serializers import PersonSerializer
 from django.http import JsonResponse
 from .models import Doctor, Patient
-from .forms import PatientForm, PersonForm, AppointmentForm
+from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -42,30 +42,6 @@ def add_person(request):
 
 def success(request):
     return render(request, 'hospital/success.html')
-     
-# the method to fetch the user data and to edit it for both the android and the web
-# @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def get_person(request, user_id):
-#     person = get_object_or_404(Patient, id=user_id)
-
-#     # Return HTML template for web clients
-#     if request.method == 'GET':
-#         return render(request, 'hospital/person_details.html', {'person_data': person})
-    
-#     elif request.method == 'POST':
-#         # Update data based on the form data from the web client
-#         person.name = request.data.get('name', person.name)
-#         person.dob = request.data.get('dob', person.dob)
-#         person.age = request.data.get('age', person.age)
-#         person.gen = request.data.get('gen', person.gen)
-#         person.email = request.data.get('email', person.email)
-#         person.phn = request.data.get('phn', person.phn)
-#         person.password = request.data.get('password', person.password)
-#         person.save()
-
-#         # Return a success response
-#         return redirect('success')
         
 def doctor_list(request):
     doctors = Doctor.objects.all()
@@ -92,8 +68,8 @@ def send_email(patient,doctor,appointment):
 # make appointment with a doctor
 @login_required 
 def make_appointment(request, doctor_id):
-    patient_id = request.user.id - len(Doctor.objects.all()) - 1
-    patient = Patient.objects.get(id=patient_id)
+    user = User.objects.get(id=request.user.id)
+    patient = Patient.objects.get(email=user.username)
     doctor = Doctor.objects.get(id=doctor_id)
 
     if request.method == 'POST':
@@ -107,13 +83,20 @@ def make_appointment(request, doctor_id):
             appointment.scheduled_time = scheduled_time
             appointment.save()
             send_email(patient,doctor,appointment)
-            
 
             return redirect('get_homepage')
     else:
         form = AppointmentForm()
 
     return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
+
+def fetch_appointments(request):
+    patient = Patient.objects.get(User.objects.get(id=request.user.id).username)
+    appointments = Appointment.objects.filter(patient_id=patient.id)
+    print(appointments)
+
+    return render(request, 'hospital/view_appointments.html', {'appointments' : appointments})
+
 
 # successful login of the user 
 def login_view(request):
@@ -136,20 +119,41 @@ def login_view(request):
 # fetching the user information 
 @login_required
 def get_person(request):
-    person_id = request.user.id - len(Doctor.objects.all()) - 1
-    print(person_id)
-    patient = Patient.objects.get(id=person_id)
+    user = User.objects.get(id=request.user.id)
+    person = Person.objects.get(email=user.username)
+    is_doctor = person.is_doctor 
+
+
+    if is_doctor:
+        doctor = Doctor.objects.get(email=user.username)
+        appointments = Appointment.objects.filter(doctor_id=doctor.id).order_by('scheduled_time')
+    else:
+        patient = Patient.objects.get(email=User.objects.get(id=request.user.id).username)
+        appointments = Appointment.objects.filter(patient_id=patient.id).order_by('scheduled_time') 
+
     if request.method == 'POST':
-        form = PatientForm(request.POST, instance=patient)
-        print(form)
+
+        if is_doctor:
+            form = DoctorForm(request.POST, instance=doctor)
+        else:
+            form = PatientForm(request.POST, instance=patient)
+
         if form.is_valid():
+            # update user password in the User class too if the password gets changed 
+            password = form.cleaned_data['password']
+            user = User.objects.get(id=request.user.id)
+            user.password = password
+
             form.save()
             print('Profile updated successfully')
             return redirect('get_homepage')
     else:
-        form = PatientForm(instance=patient)
-    return render(request, 'hospital/person_details.html', {'form': form})
+        if is_doctor:
+            form = DoctorForm(instance=doctor)
+        else:
+            form = PatientForm(instance=patient)
 
+    return render(request, 'hospital/person_details.html', {'form': form, 'appointments': appointments, 'is_doctor': is_doctor})
 
 def logout_view(request):
     auth_logout(request)
