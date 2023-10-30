@@ -17,7 +17,8 @@ class PatientForm(forms.ModelForm):
     gen = forms.ChoiceField(choices=GENDER_CHOICES, required=True)
     class Meta:
         model = Patient
-        exclude = ['is_doctor']
+        fields = ['name', 'dob', 'age', 'gen', 'email', 'password', 'phn']
+
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date'}),
             'address': forms.TextInput(),  # Leave the widget for address as default

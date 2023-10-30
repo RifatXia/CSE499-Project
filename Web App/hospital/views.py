@@ -1,26 +1,21 @@
-from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from base64 import urlsafe_b64encode
 from django.shortcuts import render, redirect
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .models import Person
-from django.http import JsonResponse
-from .models import Doctor, Patient
+from .models import Person, Doctor, Patient, Appointment
 from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
-from .models import Doctor, Patient, Appointment
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate,login
-from django.contrib import messages
-from django.contrib.auth.hashers import check_password
-from django.http import HttpResponse
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import send_mail
+from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.template.loader import render_to_string
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.utils.http import urlsafe_base64_encode
 
 # patient signup 
 def add_person(request):
@@ -96,7 +91,6 @@ def fetch_appointments(request):
 
     return render(request, 'hospital/view_appointments.html', {'appointments' : appointments})
 
-
 # successful login of the user 
 def login_view(request):
     if request.method == 'POST':
@@ -157,3 +151,36 @@ def get_person(request):
 def logout_view(request):
     auth_logout(request)
     return redirect('get_homepage')
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'password/custom_password_reset_email.html'
+    success_url = reverse_lazy('custom_password_reset_done')
+    subject_template_name = 'password/custom_password_reset_subject.txt'
+    template_name = 'password/custom_password_reset_form.html'
+    extra_email_context = {'person_model': Person}
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        person = Person.objects.get(email=email)
+
+        uid = urlsafe_base64_encode(force_bytes(person.pk))
+        token = default_token_generator.make_token(person)
+        token_url = reverse_lazy('custom_password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+
+        # Send an email with the reset link
+        subject = 'Password reset'
+        message = render_to_string('password/custom_password_reset_email.html', {
+            'reset_url': self.request.build_absolute_uri(token_url),
+        })
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(subject, message, from_email, [email])
+
+        return super().form_valid(form)
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'password/custom_password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'password/custom_password_reset_confirm.html'
+    success_url = reverse_lazy('login')
