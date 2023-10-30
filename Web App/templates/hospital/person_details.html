@@ -55,23 +55,24 @@
                                 <button class="btn btn-light">Cancel</button>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
+                            {% for appointment in appointments %}
+                            {% if is_doctor %}
+                            <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.patient.name }}</p>
+                            {% else %}
+                            <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
+                            {% endif %}
+                            {% endfor %}
                         
+                            {% endblock %}
+                        </div>
+
                             
                     </div>
                         
                 </div>
 
-                    <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
-                        {% for appointment in appointments %}
-                        {% if is_doctor %}
-                        <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.patient.name }}</p>
-                        {% else %}
-                        <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
-                        {% endif %}
-                        {% endfor %}
-                    
-                        {% endblock %}
-                    </div>
+                
                 </div>
             </div>
         </div>
