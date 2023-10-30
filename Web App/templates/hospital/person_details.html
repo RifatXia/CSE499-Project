@@ -7,13 +7,15 @@
     <meta charset="UTF-8">
     <title>Account Information</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/person_details.css' %}">
 </head>
 
 <body>
     <section class="py-5 my-5">
+    
         <div class="container">
 
             <div class="bg-skyish shadow rounded-lg d-block d-sm-flex">
@@ -22,7 +24,7 @@
                         <div class="img-circle text-center mb-3">
                             <img src="/static/images/avatar.jpg" alt="Image" class="shadow">
                         </div>
-                       
+
                     </div>
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
@@ -40,130 +42,41 @@
                 <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <h3 class="mb-4">Account Information</h3>
-                        <div class="container">
-                            {% block content %}
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                    
-                                            {{ form.as_p }}
-                                    
-                                            
-                                        </div>
-                                    </div>
-                                    
-
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <button class="btn btn-light">Cancel</button>
-                                
-                                </div>
-                                
-                            </form>
-                        
-                        </div>
-                        <!-- Update the form's action attribute to 'get_person' -->
-                        <!-- <form method="POST" action="{% url 'get_person' %}">
-                            {% csrf_token %} -->
-                            <!-- <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control" name="name" value="{{ person.name }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Date Of Birth</label>
-                                        <input type="date" class="form-control" name="dob" value="{{ person.dob|date:'Y-m-d' }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Age</label>
-                                        <input type="number" class="form-control" name="age" value="{{ person.age }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Gender</label>
-                                        <input type="text" class="form-control" name="gen" value="{{ person.gen }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="text" class="form-control" name="email" value="{{ person.email }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" class="form-control" name="phn" value="{{ person.phn }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="text" class="form-control" name="password" value="{{ person.password }}">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- <div>   
+                        <div class="container-lg">
+                            <div class="form-group">
+                                {% block content %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                </form>
+                            </div>
+                            <div>
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                   
+                                <button class="btn btn-light">Cancel</button>
                             </div>
-                        </form> -->
+                        </div>
+                        
+                            
                     </div>
-                    
+                        
+                </div>
+
                     <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
-                            {% for appointment in appointments %}
-                                {% if is_doctor %}
-                                    <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.patient.name }}</p>
-                                {% else %}
-                                    <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
-                                {% endif %}
-                            {% endfor %}
-                            <!-- <h3 class="mb-4">Notification Settings</h3>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="notification1">
-                                        <label class="form-check-label" for="notification1">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum accusantium
-                                            accusamus, neque cupiditate quis
-                                        </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="notification2">
-                                <label class="form-check-label" for="notification2">
-                                    hic nesciunt repellat perferendis voluptatum totam porro eligendi.
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="notification3">
-                                <label class="form-check-label" for="notification3">
-                                    commodi fugiat molestiae tempora corporis. Sed dignissimos suscipit
-                                </label>
-                            </div>
-                        </div> -->
-                        <!-- <div>
-                            <button class="btn btn-primary">Update</button>
-                            <button class="btn btn-light">Cancel</button>
-                        </div> -->
+                        {% for appointment in appointments %}
+                        {% if is_doctor %}
+                        <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.patient.name }}</p>
+                        {% else %}
+                        <p> Appointment on {{ appointment.scheduled_time }} with {{ appointment.doctor.name }}</p>
+                        {% endif %}
+                        {% endfor %}
+                    
                         {% endblock %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

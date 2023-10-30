@@ -27,14 +27,12 @@ body {
     width: 50%;
     height: 200px;
     margin-bottom: 40px;
-    margin-top: 140px;
+    margin-top: 120px;
     text-align: center;
     align-items: center;
     position: relative;
     padding: 50px;
 }
-
-
 
 .box {
     background: white;
@@ -61,6 +59,11 @@ body {
 address,h1,p.larger-font {
     font-size: 28px;
     /* Adjust the font size to your preference */
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 28px;
 }
 
 p {

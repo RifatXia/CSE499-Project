@@ -36,7 +36,7 @@ body {
 
 
 
-.box {
+/* .box {
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -48,7 +48,7 @@ body {
     display: inline-block;
     text-align: center;
     transition: transform 0.3s ease-in-out;
-}
+} */
 
 .box:hover {
     transform: scale(1.1);

@@ -14,13 +14,19 @@ class PatientForm(forms.ModelForm):
         ('Others', 'Others'),
     ]
 
-    gen = forms.ChoiceField(choices=GENDER_CHOICES, required=True)
+    gen = forms.ChoiceField(choices=GENDER_CHOICES, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
     class Meta:
         model = Patient
         exclude = ['is_doctor']
         widgets = {
-            'dob': forms.DateInput(attrs={'type': 'date'}),
-            'address': forms.TextInput(),  # Leave the widget for address as default
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'dob': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'age': forms.TextInput(attrs={'class': 'form-control'}),
+            'gen': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'phn': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
         }
 
     def clean_age(self):
