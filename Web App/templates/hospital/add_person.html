@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration Form</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -15,16 +16,20 @@
     
 <div class="container">
     <h1>Patient Registration Form</h1>
-    {% block content %}
-    <form method="post">
-        {% csrf_token %}
+    <div class="container-lg">
         <div class="form-group">
-        {{ form.as_p }}        
-        </div>      
-        <button type="submit">Submit</button>
-    </form>
-    {% endblock %}
-
+            {% block content %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+           
+    </div>
+            {% endblock %}
 </div>
 <!-- <div class="container">
         <h1>Patient Registration Form</h1>
