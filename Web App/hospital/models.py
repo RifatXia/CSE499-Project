@@ -6,21 +6,12 @@ class Person(User):
     dob = models.DateField()
     age = models.IntegerField()
     gen = models.CharField(max_length=6)
-    # email = models.EmailField(unique=True)
     phn = models.IntegerField()
-    # pass_text = models.CharField(max_length=100)
     is_doctor = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
-    # def save(self, *args, **kwargs):
-    #     user, created = User.objects.get_or_create(username=self.email, email=self.email)
-    #     if created:
-    #         user.set_password(self.password)
-    #         user.save()
-
-    #     super(Person, self).save(*args, **kwargs)
     def save(self, *args, **kwargs):
         self.username = self.email
         self.set_password(self.password) 
@@ -28,12 +19,18 @@ class Person(User):
 
 class Patient(Person):
     address = models.CharField(max_length=200, default='Dhaka')
+    
+    class Meta:
+        verbose_name_plural = "Patients"
 
 class Doctor(Person):
     image = models.ImageField(default='static/images/ai.jpg', upload_to='static/images/doctor_images')
     degree = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     keyword = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = "Doctors"
 
     def save(self, *args, **kwargs):
         self.is_doctor = True
