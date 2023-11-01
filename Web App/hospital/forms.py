@@ -14,6 +14,16 @@ class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ['email', 'password']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'dob': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'age': forms.TextInput(attrs={'class': 'form-control'}),
+            'gen': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'phn': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(render_value=True, attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
+        }
 
 
 class PatientForm(forms.ModelForm):
