@@ -30,16 +30,35 @@ class Doctor(Person):
     degree = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     keyword = models.CharField(max_length=100)
+    days_available = models.CharField(max_length=100, null=True)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
 
     class Meta:
         verbose_name_plural = "Doctors"
 
     def save(self, *args, **kwargs):
         self.is_doctor = True
-        super(Doctor, self).save(*args, **kwargs)
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        start_day = self.days_available.split('-')[0].strip()
+        end_day = self.days_available.split('-')[1].strip()
+
+        selected_days = days[days.index(start_day):days.index(end_day) + 1]
+
+        # Create and save the Doctor instance first
+        doctor = super(Doctor, self).save(*args, **kwargs)
+
+        # Create and save the Schedule associated with the Doctor
+        schedule = Schedule.objects.create(
+            doctor=doctor,
+            start_time=self.start_time,
+            end_time=self.end_time,
+            days=", ".join(selected_days),
+        )
 
 # models for setting appointment and fetching the appointment dates
 class Schedule(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     DAYS = (
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),
@@ -49,8 +68,8 @@ class Schedule(models.Model):
         ('Saturday', 'Saturday'),
         ('Sunday', 'Sunday'),
     )
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    day = MultiSelectField(max_length=10, choices=DAYS)
+    
+    days = MultiSelectField(max_length=500, choices=DAYS)
     start_time = models.TimeField()
     end_time = models.TimeField()
 
