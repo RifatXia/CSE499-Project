@@ -43,17 +43,29 @@ class Doctor(Person):
         start_day = self.days_available.split('-')[0].strip()
         end_day = self.days_available.split('-')[1].strip()
 
-        selected_days = days[days.index(start_day):days.index(end_day) + 1]
-
+        selected_days = []
+        start_ind = -1
+        end_ind = 0
+        for i in range(0, len(days)):
+            if days[i] == start_day:
+                start_ind = i
+            
+            if start_ind != -1 and days[i] == end_day:
+                end_ind = i
+                break
+        
+        for i in range(start_ind, end_ind + 1):
+            selected_days.append(days[i])
+        
         # Create and save the Doctor instance first
         doctor = super(Doctor, self).save(*args, **kwargs)
 
         # Create and save the Schedule associated with the Doctor
         schedule = Schedule.objects.create(
-            doctor=doctor,
+            doctor=self,
             start_time=self.start_time,
             end_time=self.end_time,
-            days=", ".join(selected_days),
+            days = selected_days
         )
 
 # models for setting appointment and fetching the appointment dates
