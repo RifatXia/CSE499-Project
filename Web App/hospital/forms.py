@@ -84,13 +84,13 @@ class DoctorForm(forms.ModelForm):
             raise forms.ValidationError("Age cannot be negative.")
         return age
     
-class AppointmentForm(forms.ModelForm):
-    class Meta:
-        model = Appointment
-        fields = ['scheduled_time']
-        widgets = {
-            'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        }
+# class AppointmentForm(forms.ModelForm):
+#     class Meta:
+#         model = Appointment
+#         fields = ['scheduled_time']
+#         widgets = {
+#             'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+#         }
 
 # password reset form 
 class CustomPasswordResetForm(PasswordResetForm):

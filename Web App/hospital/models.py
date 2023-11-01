@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from datetime import timedelta, date
 from multiselectfield import MultiSelectField
+from django.utils import timezone
 
 class Person(User):
     name = models.CharField(max_length=100)
@@ -57,16 +58,25 @@ class Doctor(Person):
         for i in range(start_ind, end_ind + 1):
             selected_days.append(days[i])
         
-        # Create and save the Doctor instance first
         doctor = super(Doctor, self).save(*args, **kwargs)
 
-        # Create and save the Schedule associated with the Doctor
         schedule = Schedule.objects.create(
             doctor=self,
             start_time=self.start_time,
             end_time=self.end_time,
             days = selected_days
         )
+
+    def get_appointment(self):
+        today = timezone.now().date()
+        end_date = today + timezone.timedelta(weeks=2)
+        
+        appointments = Appointment.objects.filter(
+            doctor=self,
+            date_range=[today, end_date],
+        )
+        available_appointments = appointments.filter(patient=None)
+
 
 # models for setting appointment and fetching the appointment dates
 class Schedule(models.Model):
@@ -92,7 +102,9 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    scheduled_time = models.DateTimeField()
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
     def __str__(self):
         return f"{self.patient.name} with {self.doctor.name}"
