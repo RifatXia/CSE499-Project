@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from datetime import timedelta, date
+from multiselectfield import MultiSelectField
 
 class Person(User):
     name = models.CharField(max_length=100)
@@ -35,6 +37,25 @@ class Doctor(Person):
     def save(self, *args, **kwargs):
         self.is_doctor = True
         super(Doctor, self).save(*args, **kwargs)
+
+# models for setting appointment and fetching the appointment dates
+class Schedule(models.Model):
+    DAYS = (
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    )
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    day = MultiSelectField(max_length=10, choices=DAYS)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return self.doctor.name
 
 class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

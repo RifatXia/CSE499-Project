@@ -39,7 +39,6 @@ class PatientForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
         }
 
-
     def clean_age(self):
         age = self.cleaned_data['age']
         if age < 0:
