@@ -9,6 +9,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.utils.encoding import force_bytes
 from .models import Person, Patient, Appointment, Doctor
+from django.core.exceptions import ValidationError
+from django.contrib.auth.validators import ASCIIUsernameValidator, UnicodeUsernameValidator
+from django.utils.translation import gettext as _
 
 class PersonForm(forms.ModelForm):
     class Meta:
@@ -25,8 +28,26 @@ class PersonForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
         }
 
-
 class PatientForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(render_value=True, attrs={'class': 'form-control'}))
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+
+        # Custom password validation
+        if len(password) < 8:
+            raise ValidationError(
+                _("Password must be at least 8 characters."),
+                code='password_too_short',
+            )
+
+        if password.isdigit():
+            raise ValidationError(
+                _("Password can't be entirely numeric."),
+                code='password_entirely_numeric',
+            )
+
+        return password
     GENDER_CHOICES = [
         ('Male', 'Male'),
         ('Female', 'Female'),
@@ -89,8 +110,8 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['scheduled_time']
-        widgets = {
-            'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        widgets = {           
+            'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
         }
 
 # password reset form 

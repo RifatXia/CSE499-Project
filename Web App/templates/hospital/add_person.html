@@ -7,62 +7,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration Form</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
-    
-<div class="container">
-    <h1>Patient Registration Form</h1>
-    <div class="container-lg">
-        <div class="form-group">
-            {% block content %}
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
-           
-    </div>
-            {% endblock %}
-</div>
-<!-- <div class="container">
-        <h1>Patient Registration Form</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_name">Full Name:</label>
-                {{ form.name }}
-            </div>
-            <div class="form-group">
-                <label for="id_dob">Date Of Birth:</label>
-                <input type="date" id="id_dob" name="dob">
-            </div>
-            <div class="form-group">
-                <label for="id_age">Age:</label>
-                {{ form.age }}
-            </div>
-            <div class="form-group">
-                <label for="id_gen">Gender:</label>
-                <select id="id_gen" name="gen">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="others">Others</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="id_phn">Phone Number:</label>
-                {{ form.phn }}
-            </div>
 
-            <button type="submit">Submit</button>
-        </form>
-    </div> -->
+    <div class="container">
+        <h1>Patient Registration Form</h1>
+        <div class="container-lg">
+            <div class="form-group">
+                {% block content %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">Full Name:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.dob.id_for_label }}">Date Of Birth:</label>
+                        {{ form.dob }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.age.id_for_label }}">Age:</label>
+                        {{ form.age }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.gen.id_for_label }}">Gender:</label>
+                        {{ form.gen }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.phn.id_for_label }}">Phone Number:</label>
+                        {{ form.phn }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Password:</label>
+                        {{ form.password }}
+                        {% for error in form.password.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}">Address:</label>
+                        {{ form.address }}
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
 </body>
 
 </html>

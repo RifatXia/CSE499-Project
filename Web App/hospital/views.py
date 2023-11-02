@@ -18,6 +18,8 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from django.utils.http import urlsafe_base64_encode
 from .forms import CustomPasswordResetForm
 from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
@@ -34,6 +36,19 @@ def add_person(request):
         form = PatientForm()
 
     return render(request, 'hospital/add_person.html', {'form': form})
+
+def validate_custom_password(password):
+    if len(password) < 8:
+        raise ValidationError(
+            _("Password must be at least 8 characters."),
+            code='password_too_short',
+        )
+
+    if password.isdigit():
+        raise ValidationError(
+            _("Password can't be entirely numeric."),
+            code='password_entirely_numeric',
+        )
 
 def success(request):
     return render(request, 'hospital/success.html')
