@@ -70,7 +70,6 @@ class PatientForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control'}),  # Leave the widget for address as default
         }
 
-
     def clean_age(self):
         age = self.cleaned_data['age']
         if age < 0:
@@ -106,6 +105,7 @@ class DoctorForm(forms.ModelForm):
             raise forms.ValidationError("Age cannot be negative.")
         return age
     
+<<<<<<< HEAD
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
@@ -113,6 +113,15 @@ class AppointmentForm(forms.ModelForm):
         widgets = {           
             'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
         }
+=======
+# class AppointmentForm(forms.ModelForm):
+#     class Meta:
+#         model = Appointment
+#         fields = ['scheduled_time']
+#         widgets = {
+#             'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+#         }
+>>>>>>> 6678660279afe38d1df66a98cfa1d7a1fb4b2aab
 
 # password reset form 
 class CustomPasswordResetForm(PasswordResetForm):
