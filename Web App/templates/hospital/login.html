@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
     <title>Cooper Hospital</title>
@@ -36,16 +38,25 @@
     
     
     <div class="container">
-        {% block content %}
+        
         <h2>Login</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="button" type="submit">Login</button>
-        </form>
+        <div class="container-lg">
+            <div class="form-group">
+                {% block content %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div>
+                        <button class="button" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>     
+        </div>
         <p>Don't have an account? <a href="{% url 'add_person' %}">Sign up</a></p>
         <p>Forgot password? <a href="{% url 'custom_password_reset' %}">Reset password</a></p>
-        {% endblock %}
+                {% endblock %}
+
+        
 
     </div>
 
