@@ -96,6 +96,8 @@ class Appointment(models.Model):
     date = models.DateField(null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
+    # schedule_time = models.DateTimeField(null=True)
+
 
     def __str__(self):
         return f"{self.patient.name} with {self.doctor.name}"
