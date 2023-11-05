@@ -11,6 +11,7 @@ urlpatterns = [
     path('doctor_list/', views.doctor_list, name='doctor_list'),
     path('get_doctor/<str:keyword>/', views.get_doctor, name='get_doctor'),
     path('make_appointment/<doctor_id>', views.make_appointment, name='make_appointment'),
+    path('get_appointments/<doctor_id>', views.get_appointments, name='get_appointments'),
 
     path('password_reset/', CustomPasswordResetView.as_view(), name='custom_password_reset'),
     path('password_reset/done/', CustomPasswordResetDoneView.as_view(), name='custom_password_reset_done'),

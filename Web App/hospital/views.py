@@ -1,6 +1,6 @@
 from base64 import urlsafe_b64encode
 from django.shortcuts import render, redirect
-from .models import Person, Doctor, Patient, Appointment
+from .models import Person, Doctor, Patient, Appointment, Schedule
 from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -15,9 +15,13 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.decorators import login_required
 from django.utils.http import urlsafe_base64_encode
 from .forms import CustomPasswordResetForm
 from django.contrib import messages
+from django.utils import timezone
+import datetime
+
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
@@ -60,11 +64,39 @@ def send_email(patient,doctor,appointment):
     recipient_list = [patient.email, ]
     send_mail( subject, message, email_from, recipient_list )
 
-from django.contrib.auth.decorators import login_required
-
-
 
 # make appointment with a doctor
+def get_appointments(request, doctor_id):
+    today = timezone.now().date()
+    end_date = today + timezone.timedelta(weeks=2)
+
+    # Calculate one-hour time slots for each day in the date range
+    doctor = Doctor.objects.get(id=doctor_id)
+    schedule = Schedule.objects.get(doctor=doctor)
+
+    time_slots = []
+    current_date = today
+    while current_date <= end_date:
+        for hour in range(24):  # 24 hours in a day
+            for minute in range(0, 60, 60):  # Generate 1-hour time slots
+                time_slot = datetime.datetime.combine(current_date, datetime.time(hour, minute))
+                check = datetime.time(hour, minute)
+                if check >= schedule.start_time and check <= schedule.end_time:
+                    time_slots.append(time_slot)
+
+        current_date += timezone.timedelta(days=1)
+
+    # Get existing appointments for the doctor
+    existing_appointments = Appointment.objects.filter(doctor=doctor)
+    available_time_slots = [time_slot for time_slot in time_slots if not existing_appointments.filter(start_time=time_slot)]
+    for appointment in time_slots:
+        print(appointment)
+
+    # Remove time slots that are already booked
+    # print(available_time_slots)
+    # return available_time_slots
+    return render(request, 'hospital/appointment.html', {'appointments': existing_appointments})
+
 def make_appointment(request, doctor_id):
     if not request.user.is_authenticated:
         messages.warning(request, 'Please log in first.')
