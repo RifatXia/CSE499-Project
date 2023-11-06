@@ -1,6 +1,6 @@
 from base64 import urlsafe_b64encode
 from django.shortcuts import render, redirect
-from .models import Person, Doctor, Patient, Appointment
+from .models import Person, Doctor, Patient, Appointment, Schedule
 from .forms import PatientForm, PersonForm, AppointmentForm, DoctorForm
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -15,11 +15,15 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.decorators import login_required
 from django.utils.http import urlsafe_base64_encode
 from .forms import CustomPasswordResetForm
 from django.contrib import messages
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+
 # patient signup 
 def add_person(request):
     if request.method == 'POST':
@@ -75,41 +79,50 @@ def send_email(patient,doctor,appointment):
     recipient_list = [patient.email, ]
     send_mail( subject, message, email_from, recipient_list )
 
-from django.contrib.auth.decorators import login_required
-
-
-
-# make appointment with a doctor
-def make_appointment(request, doctor_id):
+# fetch the doctor appointments and confirm it 
+def get_appointment(request, doctor_id):
     if not request.user.is_authenticated:
         messages.warning(request, 'Please log in first.')
         return redirect('login')
     
-    user = User.objects.get(id=request.user.id)
-    patient = Patient.objects.get(email=user.username)
+    today = timezone.now().date()
+    end_date = today + timezone.timedelta(weeks=4)
+
     doctor = Doctor.objects.get(id=doctor_id)
+    schedule = Schedule.objects.get(doctor=doctor)
+    patient = Patient.objects.get(id=request.user.id)
+
+    time_slots = []
+    current_date = today
+    while current_date <= end_date:
+        current_datetime = datetime.combine(current_date, schedule.start_time)
+        end_datetime = datetime.combine(current_date, schedule.end_time)
+
+        while current_datetime <= end_datetime:
+            time_slots.append(current_datetime)
+            current_datetime += timedelta(hours=1)
+
+        current_date += timedelta(days=1)
+
+    existing_appointments = Appointment.objects.filter(doctor=doctor)
+    available_time_slots = [time_slot for time_slot in time_slots if not existing_appointments.filter(scheduled_time=time_slot)]
 
     if request.method == 'POST':
-        form = AppointmentForm(request.POST)
+        form = AppointmentForm(request.POST, available_time_slots=available_time_slots)
         if form.is_valid():
-            scheduled_time = form.cleaned_data['scheduled_time']
-            # Create the appointment
-            appointment = form.save(commit=False)
-            appointment.patient = patient
-            appointment.doctor = doctor
-            appointment.scheduled_time = scheduled_time
-            appointment.save()
-            send_email(patient,doctor,appointment)
-
-            return redirect('get_homepage')
+            selected_time = form.cleaned_data['scheduled_time']
+            if selected_time:
+                appointment = Appointment(patient=patient, doctor=doctor, scheduled_time=selected_time)
+                appointment.save()
+                send_email(patient,doctor,appointment)
+                return redirect('get_homepage')
     else:
-        form = AppointmentForm()
+        form = AppointmentForm(available_time_slots=available_time_slots)
 
-    return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
-
+    return render(request, 'hospital/appointment.html', {'form': form, 'doctor': doctor, 'person': patient})
 
 def fetch_appointments(request):
-    patient = Patient.objects.get(User.objects.get(id=request.user.id).username)
+    patient = Patient.objects.get(User.objects.get(id=request.user_id).username)
     appointments = Appointment.objects.filter(patient_id=patient.id)
     print(appointments)
 

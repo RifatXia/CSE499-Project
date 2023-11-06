@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import timedelta, date
@@ -67,20 +68,12 @@ class Doctor(Person):
             days = selected_days
         )
 
-    def get_appointment(self):
-        today = timezone.now().date()
-        end_date = today + timezone.timedelta(weeks=2)
-        
-        appointments = Appointment.objects.filter(
-            doctor=self,
-            date_range=[today, end_date],
-        )
-        available_appointments = appointments.filter(patient=None)
-
+    def work(self):
+        return self.name
 
 # models for setting appointment and fetching the appointment dates
 class Schedule(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
     DAYS = (
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),
@@ -102,9 +95,7 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    scheduled_time = models.DateTimeField(null=True)
 
     def __str__(self):
         return f"{self.patient.name} with {self.doctor.name}"
