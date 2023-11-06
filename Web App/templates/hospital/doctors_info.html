@@ -63,7 +63,7 @@
             <p style="color: red;">Degree: {{ doctor.degree }}</p>
             <p style="color: red;">Specialization: {{ doctor.specialization }}</p>
             <br>
-            <a href="{% url 'make_appointment' doctor.id %}">
+            <a href="{% url 'get_appointment' doctor.id %}">
                 <button class="button" type="button">Make an Appointment</button>
             </a>
     </div>
