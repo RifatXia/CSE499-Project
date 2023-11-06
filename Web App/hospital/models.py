@@ -68,6 +68,8 @@ class Doctor(Person):
             days = selected_days
         )
 
+    def work(self):
+        return self.name
 
 # models for setting appointment and fetching the appointment dates
 class Schedule(models.Model):
@@ -93,11 +95,7 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    date = models.DateField(null=True)
-    start_time = models.TimeField(null=True)
-    end_time = models.TimeField(null=True)
-    # schedule_time = models.DateTimeField(null=True)
-
+    scheduled_time = models.DateTimeField()
 
     def __str__(self):
         return f"{self.patient.name} with {self.doctor.name}"

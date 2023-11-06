@@ -19,14 +19,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils.http import urlsafe_base64_encode
 from .forms import CustomPasswordResetForm
 from django.contrib import messages
-<<<<<<< HEAD
 from django.utils import timezone
 from datetime import datetime, timedelta
-
-=======
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
->>>>>>> 4c62e7110df256c40fd230b3d3624634e3af65c1
+
 # patient signup 
 def add_person(request):
     if request.method == 'POST':

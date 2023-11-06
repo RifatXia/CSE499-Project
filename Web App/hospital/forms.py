@@ -105,34 +105,15 @@ class DoctorForm(forms.ModelForm):
             raise forms.ValidationError("Age cannot be negative.")
         return age
     
-<<<<<<< HEAD
-from django import forms
-
 class AppointmentForm(forms.ModelForm):
-    class Meta:
-        model = Appointment
-        fields = ['schedule_time']
-
-    schedule_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-=======
-<<<<<<< HEAD
-class AppointmentForm(forms.ModelForm):
-    class Meta:
-        model = Appointment
-        fields = ['scheduled_time']
-        widgets = {           
-            'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
-        }
-=======
-# class AppointmentForm(forms.ModelForm):
-#     class Meta:
+    pass    
+# class Meta:
 #         model = Appointment
 #         fields = ['scheduled_time']
 #         widgets = {
 #             'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
 #         }
->>>>>>> 6678660279afe38d1df66a98cfa1d7a1fb4b2aab
->>>>>>> 4c62e7110df256c40fd230b3d3624634e3af65c1
+
 
 # password reset form 
 class CustomPasswordResetForm(PasswordResetForm):
