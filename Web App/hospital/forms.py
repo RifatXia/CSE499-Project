@@ -12,6 +12,7 @@ from .models import Person, Patient, Appointment, Doctor
 from django.core.exceptions import ValidationError
 from django.contrib.auth.validators import ASCIIUsernameValidator, UnicodeUsernameValidator
 from django.utils.translation import gettext as _
+from datetime import datetime
 
 class PersonForm(forms.ModelForm):
     class Meta:
@@ -104,19 +105,23 @@ class DoctorForm(forms.ModelForm):
         if age < 0:
             raise forms.ValidationError("Age cannot be negative.")
         return age
-    
-class AppointmentForm(forms.ModelForm):
-    pass    
-# class Meta:
-#         model = Appointment
-#         fields = ['scheduled_time']
-#         widgets = {
-#             'scheduled_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-#         }
 
+class AppointmentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        available_time_slots = kwargs.pop('available_time_slots', [])
+        super(AppointmentForm, self).__init__(*args, **kwargs)
+        
+        self.fields['scheduled_time'] = forms.ChoiceField(
+            label='Select Time',
+            choices=[(str(time_slot), time_slot.strftime('%Y-%m-%d %H:%M')) for time_slot in available_time_slots]
+        )
+
+    class Meta:
+        model = Appointment
+        fields = ['scheduled_time']
 
 # password reset form 
-class CustomPasswordResetForm(PasswordResetForm):
+class CustomPasswordResetForm(PasswordResetForm): 
     # Define your custom subject and email template names
     subject_template_name = 'password/custom_password_reset_subject.txt'
     email_template_name = 'password/custom_password_reset_email.html'

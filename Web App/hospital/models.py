@@ -95,7 +95,7 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    scheduled_time = models.DateTimeField()
+    scheduled_time = models.DateTimeField(null=True)
 
     def __str__(self):
         return f"{self.patient.name} with {self.doctor.name}"

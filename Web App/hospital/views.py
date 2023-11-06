@@ -79,14 +79,18 @@ def send_email(patient,doctor,appointment):
     recipient_list = [patient.email, ]
     send_mail( subject, message, email_from, recipient_list )
 
-
-# make appointment with a doctor
-def get_appointments(request, doctor_id):
+# fetch the doctor appointments and confirm it 
+def get_appointment(request, doctor_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Please log in first.')
+        return redirect('login')
+    
     today = timezone.now().date()
-    end_date = today + timezone.timedelta(weeks=2)
+    end_date = today + timezone.timedelta(weeks=4)
 
     doctor = Doctor.objects.get(id=doctor_id)
     schedule = Schedule.objects.get(doctor=doctor)
+    patient = Patient.objects.get(id=request.user.id)
 
     time_slots = []
     current_date = today
@@ -94,7 +98,6 @@ def get_appointments(request, doctor_id):
         current_datetime = datetime.combine(current_date, schedule.start_time)
         end_datetime = datetime.combine(current_date, schedule.end_time)
 
-        # Generate 1-hour time slots within the doctor's schedule
         while current_datetime <= end_datetime:
             time_slots.append(current_datetime)
             current_datetime += timedelta(hours=1)
@@ -102,41 +105,24 @@ def get_appointments(request, doctor_id):
         current_date += timedelta(days=1)
 
     existing_appointments = Appointment.objects.filter(doctor=doctor)
-    available_time_slots = [time_slot for time_slot in time_slots if not existing_appointments.filter(start_time=time_slot)]
-    print(type(available_time_slots))
-    
-    return render(request, 'hospital/appointment.html', {'appointments': available_time_slots})
-
-def make_appointment(request, doctor_id):
-    if not request.user.is_authenticated:
-        messages.warning(request, 'Please log in first.')
-        return redirect('login')
-    
-    user = User.objects.get(id=request.user.id)
-    patient = Patient.objects.get(email=user.username)
-    doctor = Doctor.objects.get(id=doctor_id)
+    available_time_slots = [time_slot for time_slot in time_slots if not existing_appointments.filter(scheduled_time=time_slot)]
 
     if request.method == 'POST':
-        form = AppointmentForm(request.POST)
+        form = AppointmentForm(request.POST, available_time_slots=available_time_slots)
         if form.is_valid():
-            scheduled_time = form.cleaned_data['scheduled_time']
-            # Create the appointment
-            appointment = form.save(commit=False)
-            appointment.patient = patient
-            appointment.doctor = doctor
-            appointment.scheduled_time = scheduled_time
-            appointment.save()
-            send_email(patient,doctor,appointment)
-
-            return redirect('get_homepage')
+            selected_time = form.cleaned_data['scheduled_time']
+            if selected_time:
+                appointment = Appointment(patient=patient, doctor=doctor, scheduled_time=selected_time)
+                appointment.save()
+                send_email(patient,doctor,appointment)
+                return redirect('get_homepage')
     else:
-        form = AppointmentForm()
+        form = AppointmentForm(available_time_slots=available_time_slots)
 
-    return render(request, 'hospital/appointment.html', {'person' : patient, 'doctor' : doctor, 'form': form})
-
+    return render(request, 'hospital/appointment.html', {'form': form})
 
 def fetch_appointments(request):
-    patient = Patient.objects.get(User.objects.get(id=request.user.id).username)
+    patient = Patient.objects.get(User.objects.get(id=request.user_id).username)
     appointments = Appointment.objects.filter(patient_id=patient.id)
     print(appointments)
 
