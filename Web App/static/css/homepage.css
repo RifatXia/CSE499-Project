@@ -148,6 +148,10 @@ nav a{
     animation: animate 1s linear infinite;
 
  }
+ /* Remove underline from links */
+ .navbar a:hover {
+     text-decoration: none;
+ }
 
  @keyframes animate{
     100%{
