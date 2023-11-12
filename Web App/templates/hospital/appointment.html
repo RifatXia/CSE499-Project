@@ -5,6 +5,9 @@
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'css/person_details.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -63,15 +66,25 @@
                 </div>
                 
                 <div class="form-group">
-                    {{ form.scheduled_time }}
-                </div>                        
-            </div>
-            <div>
-                <button class="btn btn-primary btn-lg">Submit</button>
-            </div>
-        </form>
-    </div>
+                    <label for="{{ form.scheduled_time.id_for_label }}">Scheduled Time:</label>
+                    {{ form.scheduled_time.errors }}
+                    <select name="{{ form.scheduled_time.name }}">
+                        {% for choice in form.scheduled_time.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
+                </div>
+                
+                <div>
+                    <button class="btn btn-primary btn-lg">Submit</button>
+                </div>
+                </form>
+                </div>
+    
+
+  
 </body>
 
 
