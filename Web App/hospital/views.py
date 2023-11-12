@@ -115,11 +115,12 @@ def get_appointment(request, doctor_id):
                 appointment = Appointment(patient=patient, doctor=doctor, scheduled_time=selected_time)
                 appointment.save()
                 send_email(patient,doctor,appointment)
+
                 return redirect('get_homepage')
     else:
         form = AppointmentForm(available_time_slots=available_time_slots)
 
-    return render(request, 'hospital/appointment.html', {'form': form, 'doctor': doctor, 'person': patient})
+    return render(request, 'hospital/appointment.html', {'form': form, 'doctor': doctor, 'person': patient,})
 
 def fetch_appointments(request):
     patient = Patient.objects.get(User.objects.get(id=request.user_id).username)
