@@ -23,6 +23,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+import json
 
 # patient signup 
 def add_person(request):
@@ -84,7 +85,7 @@ def get_appointment(request, doctor_id):
     if not request.user.is_authenticated:
         messages.warning(request, 'Please log in first.')
         return redirect('login')
-    
+
     today = timezone.now().date()
     end_date = today + timezone.timedelta(weeks=4)
 
@@ -115,12 +116,11 @@ def get_appointment(request, doctor_id):
                 appointment = Appointment(patient=patient, doctor=doctor, scheduled_time=selected_time)
                 appointment.save()
                 send_email(patient,doctor,appointment)
-
                 return redirect('get_homepage')
     else:
         form = AppointmentForm(available_time_slots=available_time_slots)
 
-    return render(request, 'hospital/appointment.html', {'form': form, 'doctor': doctor, 'person': patient,})
+    return render(request, 'hospital/appointment.html', {'form': form, 'doctor': doctor, 'person': patient})
 
 def fetch_appointments(request):
     patient = Patient.objects.get(User.objects.get(id=request.user_id).username)
