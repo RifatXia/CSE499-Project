@@ -79,11 +79,18 @@ def send_email(patient,doctor,appointment):
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [patient.email, ]
     send_mail( subject, message, email_from, recipient_list )
+    
+def test_yourself(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Please log in first')
+        return redirect('login')
+        
+    return redirect('http://localhost:8501/')
 
 # fetch the doctor appointments and confirm it 
 def get_appointment(request, doctor_id):
     if not request.user.is_authenticated:
-        messages.warning(request, 'Please log in first.')
+        messages.warning(request, 'Please log in first')
         return redirect('login')
 
     today = timezone.now().date()

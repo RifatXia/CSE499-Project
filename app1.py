@@ -120,22 +120,22 @@ if user_input:
             next_step = True
 
     symptoms_list = [symptoms_map[symptom] for symptom in symptoms_map]
+    keyword = 'skin'
 
     if st.button("Know Disease"):
-        st.write(matching_diseases)
+        # st.write(matching_diseases)
         disease_name = model.predict([symptoms_list])
         st.write(disease_name)
 
         # keyword = get_category(disease_name, categories)
-        keyword = 'skin'
         st.write(keyword)
         for ind in categories:
             for name in categories[ind]:
                 if name == disease_name:
                     keyword = ind 
 
-        st.write(keyword)
+        keyword = 'skin'
 
-        if st.button("Get appointment"):
-            url = f'http://127.0.0.1:8000/hospital/get_doctor/{keyword}/'
-            st.markdown(f'<meta http-equiv="refresh" content="0; URL={url}">', unsafe_allow_html=True)
+if st.button("Get appointment"):
+    url = f'http://127.0.0.1:8000/hospital/get_doctor/{keyword}/'
+    st.markdown(f'<meta http-equiv="refresh" content="0; URL={url}">', unsafe_allow_html=True)
