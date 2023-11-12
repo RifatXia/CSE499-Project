@@ -123,7 +123,7 @@ if user_input:
     keyword = 'skin'
 
     if st.button("Know Disease"):
-        st.write(matching_diseases)
+        # st.write(matching_diseases)
         disease_name = model.predict([symptoms_list])
         st.write(disease_name)
 
@@ -136,6 +136,6 @@ if user_input:
 
         keyword = 'skin'
 
-    if st.button("Get appointment"):
-        url = f'http://127.0.0.1:8000/hospital/get_doctor/{keyword}/'
-        st.markdown(f'<meta http-equiv="refresh" content="0; URL={url}">', unsafe_allow_html=True)
+if st.button("Get appointment"):
+    url = f'http://127.0.0.1:8000/hospital/get_doctor/{keyword}/'
+    st.markdown(f'<meta http-equiv="refresh" content="0; URL={url}">', unsafe_allow_html=True)
