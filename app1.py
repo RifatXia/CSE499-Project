@@ -126,7 +126,8 @@ if user_input:
         disease_name = model.predict([symptoms_list])
         st.write(disease_name)
 
-        keyword = get_category(disease_name, categories)
+        # keyword = get_category(disease_name, categories)
+        keyword = 'skin'
         st.write(keyword)
         for ind in categories:
             for name in categories[ind]:
