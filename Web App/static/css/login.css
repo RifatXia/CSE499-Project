@@ -56,4 +56,8 @@ body {
     font-size: 18px;
 
 }
+/* Remove underline from links */
+.navbar a:hover {
+    text-decoration: none;
+}
 
