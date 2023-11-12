@@ -4,7 +4,7 @@ import spacy
 import pandas as pd
 
 # Setting the page configuration
-st.set_page_config(page_title="Disease Detection", page_icon="", layout="wide")
+st.set_page_config(page_title="Disease Detection", page_icon="")
 st.title("Disease Detection")
 
 # Importing the model and the pickle dataset
@@ -114,7 +114,7 @@ if user_input:
             # Remove the symptom from symptom_frequency
             key_points.append(symptom_check)
             # Print upda`ted matching_diseases
-            st.write(matching_diseases)
+            # st.write(matching_diseases)
             
             # proceed onto the next step only if the user is done with the yes/no input 
             next_step = True
