@@ -136,6 +136,6 @@ if user_input:
 
         keyword = 'skin'
 
-if st.button("Get appointment"):
+if st.button("Get Appointment"):
     url = f'http://127.0.0.1:8000/hospital/get_doctor/{keyword}/'
     st.markdown(f'<meta http-equiv="refresh" content="0; URL={url}">', unsafe_allow_html=True)
