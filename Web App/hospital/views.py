@@ -93,7 +93,7 @@ def get_appointment(request, doctor_id):
         messages.warning(request, 'Please log in first')
         return redirect('login')
 
-    today = timezone.now().date()
+    today = timezone.now().date() + timezone.timedelta(days=1)
     end_date = today + timezone.timedelta(weeks=4)
 
     doctor = Doctor.objects.get(id=doctor_id)

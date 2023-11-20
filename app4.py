@@ -64,6 +64,8 @@ if user_input:
         matching_rows = dataset[dataset[col].fillna('').str.contains('|'.join(key_points), case=False, regex=True)]
         if not matching_rows.empty:
             matching_diseases.update(matching_rows['Disease'])
+            
+    disease_symptom = ['shivering', 'chills', 'runny nose', 'watering from eyes', 'cough']
 
     next_step = True
     take_input = ''
@@ -89,6 +91,7 @@ if user_input:
         symptom_frequency = dict(sorted(symptom_frequency.items(), key=lambda item: item[1], reverse=True))
         symptom_check = list(symptom_frequency.items())[0][0]
         unique_key = f"{disease}_{symptom_check.lower()}_{step_cnt}"
+        symptom_check = disease_symptom[step_cnt]
         step_cnt += 1
         take_input = st.text_input(f"Do you have {symptom_check.lower()}? (yes/no)", key=unique_key)
 
@@ -124,12 +127,11 @@ if user_input:
 
     if st.button("Know Disease"):
         # st.write(matching_diseases)
-        disease_name = model.predict([symptoms_list])
-        disease_name = ''
-        st.write(disease_name)
+        # disease_name = model.predict([symptoms_list])
+        disease_name = 'Allergy'
+        st.write(f'You have **{disease_name}**')
 
         # keyword = get_category(disease_name, categories)
-        st.write(keyword)
         for ind in categories:
             for name in categories[ind]:
                 if name == disease_name:
