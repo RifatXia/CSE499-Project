@@ -43,6 +43,8 @@ categories = {
         'misc': ['Bacteremia', 'Parkinson Disease', 'Hyperglycemia', 'Failure Heart', 'Obesity Morbid', 'Confusion', 'Sickle Cell Anemia', 'Tonic-Clonic Seizures', 'Herniahiatal', 'Osteoarthristis', 'Primary Carcinoma Of The Liver Cells', 'Migraine Disorders', 'Alcoholic hepatitis', 'Hypercholesterolemia', 'Obesity', 'Upper Respiratory Infection', 'Neutropenia', 'Ileus', 'Cholecystitis', 'Lymphatic Diseases', 'Anxiety State', 'Pericardial Effusion Body Substance', 'Personality Disorder', 'AIDS', 'Failure Kidney', 'Malaria', 'Hyperlipidemia', 'Hypertension ', 'Schizophrenia', 'Influenza', 'Dementia', 'Cervical spondylosis', 'HIV Infections', 'Pancreatitis', 'Depressive Disorder', 'Hypoglycemia', 'Hemorrhoids', 'Hepatitis E', 'Insufficiency Renal', 'Osteoporosis', 'Gastroenteritis', 'Endocarditis', 'Transient Ischemic Attack', 'Pneumocystiscariniipneumonia', 'Cirrhosis', 'Ischemia', 'Deglutition Disorder', 'Lymphoma', 'Diverticulitis', 'Common Cold', 'Delusion', 'Drug Reaction', 'Stenosis Aortic Valve', 'Primary Malignant Neoplasm', 'Melanoma', 'hepatitis A', 'Hemiparesis', 'Jaundice', 'Gastroesophageal Reflux Disease', 'Tuberculosis', 'Manic Disorder', 'Myocardial Infarction', 'Colitis', 'Bronchial Asthma', 'Failure Heart Congestive', 'Accidentcerebrovascular', 'Pancytopenia', 'Pyelonephritis', 'Carcinoma', 'Mitral Valve Insufficiency', 'Dimorphic hemmorhoids(piles)', 'Hyperthyroidism', 'Oralcandidiasis', 'Pneumothorax', 'Asthma', 'Hyperbilirubinemia', 'Benign Prostatic Hypertrophy', 'Dengue', 'Thrombocytopaenia', "Alzheimer'S Disease", '(vertigo) Paroymsal  Positional Vertigo', 'Arthritis', 'Neuropathy', 'Hypertension Pulmonary', 'Peripheral Vascular Disease', 'Chicken pox', 'Carcinoma Of Lung', 'Cardiomyopathy', 'Emphysema Pulmonary', 'Hypertensive Disease', 'Hypothyroidism', 'Diabetes', 'Varicose veins', 'Gastritis', 'Peptic ulcer diseae', 'Psychotic Disorder', 'Typhoid', 'Chronic Kidney Failure', 'Tricuspid Valve Insufficiency', 'Cellulitis', 'Biliary Calculus', 'Kidney Failure Acute', 'Hernia', 'Neoplasm', 'Encephalopathy', 'Dehydration', 'Infection', 'Diabetes ', 'Adenocarcinoma', 'Paralysis (brain hemorrhage)', 'Hepatitis C', 'Embolism Pulmonary', 'Ketoacidosis Diabetic', 'Degenerativepolyarthritis', 'Malignantneoplasms', 'Hepatitis B', 'Infection Urinary Tract', 'Bronchitis', 'Fibroid Tumor', 'GERD', 'Diverticulosis', 'Neoplasm Metastasis', 'Delirium', 'Pneumonia Aspiration', 'Glaucoma', 'Gout', 'Osteomyelitis', 'Hepatitis D', 'Thrombus', 'Incontinence', 'Chronic Alcoholic Intoxication', 'Kidney Disease', 'Overload Fluid', 'Hepatitis', 'Edema Pulmonary', 'Allergy', 'Chronic cholestasis', 'Pneumonia', 'Paroxysmaldyspnea', 'Dependence', 'Tachycardia Sinus', 'Affect Labile', 'Decubitus Ulcer', 'Exanthema', 'Migraine', 'Carcinoma Colon', 'Spasm Bronchial', 'Aphasia', 'Deep Vein Thrombosis', 'Anemia', 'Respiratory Failure', 'Carcinoma Prostate', 'Chronic Obstructive Airway Disease', 'Suicide Attempt', 'Epilepsy', 'Impetigo', 'Coronary Heart Disease', 'Sepsis (Invertebrate)', 'Carcinoma Breast', 'Ulcer Peptic', 'Adhesion', 'Paranoia', 'Heart attack'],
     }
 
+keyword = 'skin'
+
 if user_input:
     # Process the text with spaCy
     doc = nlp(user_input)
@@ -52,7 +54,10 @@ if user_input:
 
     # marking all of the existing symptoms as 1 
     for name in key_points:
-        if symptoms_map[name] == 0:
+        if symptoms_map.get(name, 0) == 0:
+            # Key not present, handle it accordingly
+            print(f"Symptom '{name}' not found in symptoms_map.")
+        else:
             symptoms_map[name] = 1
 
     # Check if each key point is present in the dataset
@@ -124,10 +129,8 @@ if user_input:
     if st.button("Know Disease"):
         # st.write(matching_diseases)
         disease_name = model.predict([symptoms_list])
-        st.write(disease_name)
 
         keyword = get_category(disease_name, categories)
-        st.write(keyword)
         for ind in categories:
             for name in categories[ind]:
                 if name == disease_name:

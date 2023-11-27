@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/Users/RifatXia/Desktop/CSE499 Project/CSE499-Project",
+      "program": "c:/Users/RifatXia/Desktop/CSE499 Project/CSE499-Project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
